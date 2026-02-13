@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenClaw Index</title>
+    <title>ClawTracker</title>
     <meta name="description" content="Live prices and market data for OpenClaw and Moltbook ecosystem tokens. Updated every 60 seconds.">
-    <meta property="og:title" content="OpenClaw Index | Token Tracker">
+    <meta property="og:title" content="ClawTracker | Token Tracker">
     <meta property="og:description" content="Live token price tracker for the OpenClaw and Moltbook ecosystem.">
     <meta property="og:type" content="website">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="canonical" href="https://haitzupp.github.io/openclaw-index/">
+    <link rel="canonical" href="https://haitzupp.github.io/clawtracker/">
     <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root{--bg:#0b0a0b;--bg-card:#111;--border:#1a1a1a;--border-hover:#333;--text:#fff;--text-sec:#888;--text-muted:#555;--accent:#ff6b35;--accent-start:#ff4444;--accent-end:#ff8c00;--accent-dim:color-mix(in srgb,#ff6b35 15%,var(--bg));--green:#22c55e;--red:#ef4444;--red-dim:color-mix(in srgb,#ef4444 15%,var(--bg))}
@@ -114,7 +114,7 @@
             .sammy-banner{padding:.35rem 1rem;font-size:.7rem}
         }
     </style>
-    <script>(function(){var t=localStorage.getItem('openclaw-index-theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
+    <script>(function(){var t=localStorage.getItem('clawtracker-theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
 </head>
 <body>
     <div class="sammy-banner">
@@ -130,14 +130,15 @@
                 <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4444"/><stop offset="100%" stop-color="#ff8c00"/></linearGradient></defs>
                     <rect width="32" height="32" rx="6" fill="#111"/>
-                    <path d="M8 24C8 15 11.5 7 16 7C20.5 7 24 15 24 24" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round"/>
-                    <path d="M11.5 22C11.5 16 13.5 10 16 10C18.5 10 20.5 16 20.5 22" stroke="url(#lg)" stroke-width="1.8" stroke-linecap="round"/>
-                    <circle cx="16" cy="24" r="2" fill="url(#lg)"/>
-                    <line x1="16" y1="7" x2="16" y2="4" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
-                    <line x1="10" y1="9" x2="8" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
-                    <line x1="22" y1="9" x2="24" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
+                    <circle cx="16" cy="16" r="9" stroke="url(#lg)" stroke-width="1.5"/>
+                    <circle cx="16" cy="16" r="5" stroke="url(#lg)" stroke-width="1.5"/>
+                    <circle cx="16" cy="16" r="2" fill="url(#lg)"/>
+                    <line x1="16" y1="3" x2="16" y2="8" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="16" y1="24" x2="16" y2="29" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="3" y1="16" x2="8" y2="16" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="24" y1="16" x2="29" y2="16" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
                 </svg>
-                OpenClaw Index
+                ClawTracker
             </a>
             <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
             <div class="nav-links">
@@ -150,7 +151,7 @@
     </header>
 
     <div class="hero">
-        <div class="hero-label">OpenClaw Tokens</div>
+        <div class="hero-label">ClawTracker</div>
         <h1>OpenClaw <span class="accent">Token Index.</span></h1>
         <p class="hero-sub">Live market data for public tokens in the OpenClaw and Moltbook ecosystem. Prices update every 60 seconds via CoinGecko.</p>
     </div>
@@ -160,10 +161,6 @@
         <div class="stat-box" id="stat-top-loss"><span class="stat-box-label">Biggest Drop</span><span class="stat-box-val">--</span></div>
     </div>
     <div class="controls">
-        <button class="filter-pill active" data-filter="all" onclick="setFilter('all')">All</button>
-        <button class="filter-pill" data-filter="large" onclick="setFilter('large')">Large Cap</button>
-        <button class="filter-pill" data-filter="mid" onclick="setFilter('mid')">Mid Cap</button>
-        <button class="filter-pill" data-filter="micro" onclick="setFilter('micro')">Micro Cap</button>
         <input type="text" class="search-box" placeholder="Search token or symbol..." id="search-input" oninput="renderTable()">
     </div>
     <div class="table-wrap">
@@ -172,16 +169,15 @@
                 <tr>
                     <th class="sortable" onclick="sortBy('rank')">#</th>
                     <th class="sortable" onclick="sortBy('name')">Token</th>
-                    <th class="sortable" onclick="sortBy('symbol')">Symbol</th>
-                    <th class="sortable" onclick="sortBy('price')">Price (USD)</th>
                     <th class="sortable" onclick="sortBy('change24h')">24h</th>
                     <th class="sortable hide-mobile" onclick="sortBy('change7d')">7d</th>
                     <th class="sortable" onclick="sortBy('mcap')">Market Cap</th>
-                    <th class="sortable hide-mobile" onclick="sortBy('vol')">Volume</th>
+                    <th class="sortable hide-mobile" onclick="sortBy('fdv')">FDV</th>
+                    <th class="sortable" onclick="sortBy('vol')">Volume</th>
                 </tr>
             </thead>
             <tbody id="table-body">
-                <tr><td colspan="8" class="loading-msg"><span class="loading-dot">Loading tokens...</span></td></tr>
+                <tr><td colspan="7" class="loading-msg"><span class="loading-dot">Loading tokens...</span></td></tr>
             </tbody>
         </table>
     </div>
@@ -192,16 +188,15 @@
     </div>
 
     <footer>
-        <p class="footer-text">&copy; 2026 OpenClaw Index. All rights reserved.</p>
+        <p class="footer-text">&copy; 2026 ClawTracker. All rights reserved.</p>
         <p class="footer-text" style="margin-top:.5rem"><a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="built-by">Built by 0xSammy</a></p>
     </footer>
 
     <script>
-    function toggleTheme(){var t=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('openclaw-index-theme',t);document.getElementById('theme-btn').innerHTML=t==='light'?'&#9790;':'&#9728;'}
-    (function(){if(localStorage.getItem('openclaw-index-theme')==='light')document.getElementById('theme-btn').innerHTML='&#9790;'})();
+    function toggleTheme(){var t=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('clawtracker-theme',t);document.getElementById('theme-btn').innerHTML=t==='light'?'&#9790;':'&#9728;'}
+    (function(){if(localStorage.getItem('clawtracker-theme')==='light')document.getElementById('theme-btn').innerHTML='&#9790;'})();
 
     var allTokens=[];
-    var currentFilter='all';
     var sortCol='mcap';
     var sortAsc=false;
 
@@ -230,7 +225,6 @@
     }
 
     function fmtChange(v){if(v==null)return'--';var s=v>=0?'+':'';return s+v.toFixed(2)+'%'}
-    function capTier(mcap){if(!mcap)return'micro';if(mcap>10000000)return'large';if(mcap>1000000)return'mid';return'micro'}
 
     function updateStats(){
         var total=0;var topG=null,topL=null;
@@ -247,9 +241,6 @@
     function getFiltered(){
         var q=(document.getElementById('search-input').value||'').toLowerCase();
         return allTokens.filter(function(t){
-            if(currentFilter==='large'&&capTier(t.market_cap)!=='large')return false;
-            if(currentFilter==='mid'&&capTier(t.market_cap)!=='mid')return false;
-            if(currentFilter==='micro'&&capTier(t.market_cap)!=='micro')return false;
             if(q&&t.name.toLowerCase().indexOf(q)===-1&&t.symbol.toLowerCase().indexOf(q)===-1)return false;
             return true;
         });
@@ -277,7 +268,7 @@
     function renderTable(){
         var filtered=sortTokens(getFiltered());
         var tbody=document.getElementById('table-body');
-        if(filtered.length===0){tbody.innerHTML='<tr><td colspan="8" class="loading-msg">No tokens found.</td></tr>';return}
+        if(filtered.length===0){tbody.innerHTML='<tr><td colspan="7" class="loading-msg">No tokens found.</td></tr>';return}
         var html='';
         filtered.forEach(function(t,i){
             var c24=t.price_change_percentage_24h;
@@ -286,20 +277,18 @@
             var c7dcls=c7d>=0?'up':'down';
             html+='<tr onclick="showModal(\''+t.id+'\')">';
             html+='<td class="td-rank">'+(i+1)+'</td>';
-            html+='<td><div class="td-token">'+(t.image?'<img src="'+t.image+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'')+'<span class="td-token-name">'+t.name+'</span></div></td>';
-            html+='<td class="td-symbol">'+t.symbol.toUpperCase()+'</td>';
-            html+='<td class="td-price">'+fmtUsd(t.current_price)+'</td>';
+            html+='<td><div class="td-token">'+(t.image?'<img src="'+t.image+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'')+'<span class="td-token-name">'+t.name+'</span> <span class="td-symbol">'+t.symbol.toUpperCase()+'</span></div></td>';
             html+='<td class="td-change '+(c24!=null?c24cls:'')+'">'+fmtChange(c24)+'</td>';
             html+='<td class="td-change hide-mobile '+(c7d!=null?c7dcls:'')+'">'+fmtChange(c7d)+'</td>';
             html+='<td class="td-cap">'+fmtUsd(t.market_cap)+'</td>';
-            html+='<td class="td-cap hide-mobile">'+fmtUsd(t.total_volume)+'</td>';
+            html+='<td class="td-cap hide-mobile">'+fmtUsd(t.fully_diluted_valuation)+'</td>';
+            html+='<td class="td-cap">'+fmtUsd(t.total_volume)+'</td>';
             html+='</tr>';
         });
         tbody.innerHTML=html;
         document.getElementById('last-updated').textContent='Last updated: '+new Date().toLocaleTimeString()+' - Auto-refreshes every 60s';
     }
 
-    function setFilter(f){currentFilter=f;document.querySelectorAll('.filter-pill').forEach(function(p){p.classList.toggle('active',p.dataset.filter===f)});renderTable()}
     function sortBy(col){if(sortCol===col)sortAsc=!sortAsc;else{sortCol=col;sortAsc=col==='name'||col==='symbol'}renderTable()}
 
     function showModal(id){
@@ -309,12 +298,12 @@
         m.innerHTML='<button class="modal-close" onclick="closeModal()">&times;</button>'+
             '<div class="modal-token-head">'+(t.image?'<img src="'+t.image+'" alt="">':'')+'<div><div class="modal-ticker">'+t.symbol.toUpperCase()+'</div><div class="modal-name">'+t.name+'</div></div></div>'+
             '<div class="modal-stats">'+
-            '<div class="modal-stat"><div class="modal-stat-val">'+fmtUsd(t.current_price)+'</div><div class="modal-stat-lbl">Price</div></div>'+
-            '<div class="modal-stat"><div class="modal-stat-val td-change '+(c24>=0?'up':'down')+'">'+fmtChange(c24)+'</div><div class="modal-stat-lbl">24h Change</div></div>'+
-            '<div class="modal-stat"><div class="modal-stat-val td-change '+(c7d>=0?'up':'down')+'">'+fmtChange(c7d)+'</div><div class="modal-stat-lbl">7d Change</div></div>'+
             '<div class="modal-stat"><div class="modal-stat-val">'+fmtUsd(t.market_cap)+'</div><div class="modal-stat-lbl">Market Cap</div></div>'+
             '<div class="modal-stat"><div class="modal-stat-val">'+fmtUsd(t.fully_diluted_valuation)+'</div><div class="modal-stat-lbl">FDV</div></div>'+
             '<div class="modal-stat"><div class="modal-stat-val">'+fmtUsd(t.total_volume)+'</div><div class="modal-stat-lbl">24h Volume</div></div>'+
+            '<div class="modal-stat"><div class="modal-stat-val td-change '+(c24>=0?'up':'down')+'">'+fmtChange(c24)+'</div><div class="modal-stat-lbl">24h Change</div></div>'+
+            '<div class="modal-stat"><div class="modal-stat-val td-change '+(c7d>=0?'up':'down')+'">'+fmtChange(c7d)+'</div><div class="modal-stat-lbl">7d Change</div></div>'+
+            '<div class="modal-stat"><div class="modal-stat-val">'+fmtUsd(t.current_price)+'</div><div class="modal-stat-lbl">Price</div></div>'+
             '</div>'+
             '<div style="margin-bottom:.5rem"><span style="font-size:.8rem;color:var(--text-muted)">ATH:</span> <span style="font-family:Fragment Mono,monospace;font-size:.85rem">'+fmtUsd(t.ath)+'</span></div>'+
             '<div style="margin-bottom:1rem"><span style="font-size:.8rem;color:var(--text-muted)">ATL:</span> <span style="font-family:Fragment Mono,monospace;font-size:.85rem">'+fmtUsd(t.atl)+'</span></div>'+
@@ -326,7 +315,7 @@
 
     async function loadData(){
         var data=await fetchWithFallback();
-        if(!data){document.getElementById('table-body').innerHTML='<tr><td colspan="8" class="loading-msg">Failed to load data. Retrying...</td></tr>';setTimeout(loadData,5000);return}
+        if(!data){document.getElementById('table-body').innerHTML='<tr><td colspan="7" class="loading-msg">Failed to load data. Retrying...</td></tr>';setTimeout(loadData,5000);return}
         allTokens=data.slice(0,10);
         updateStats();
         renderTable();

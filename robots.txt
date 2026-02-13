@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://haitzupp.github.io/openclaw-index/sitemap.xml
+Sitemap: https://clawtracker.io/sitemap.xml
