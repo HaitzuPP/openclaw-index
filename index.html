@@ -192,17 +192,30 @@
     var sortAsc=false;
 
     var API_URL='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=moltbook-and-openclaw-themed&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h,7d';
+    var EXTRA_IDS=['antihunter'];
+    var EXTRA_URL='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='+EXTRA_IDS.join(',')+'&sparkline=false&price_change_percentage=24h,7d';
     var PROXIES=[function(u){return u},function(u){return'https://corsproxy.io/?'+encodeURIComponent(u)},function(u){return'https://api.allorigins.win/raw?url='+encodeURIComponent(u)}];
 
-    async function fetchWithFallback(){
+    async function fetchUrl(url){
         for(var i=0;i<PROXIES.length;i++){
             try{
                 var ctrl=new AbortController();var tid=setTimeout(function(){ctrl.abort()},8000);
-                var r=await fetch(PROXIES[i](API_URL),{signal:ctrl.signal});clearTimeout(tid);
-                if(r.ok){var d=await r.json();return d}
+                var r=await fetch(PROXIES[i](url),{signal:ctrl.signal});clearTimeout(tid);
+                if(r.ok){return await r.json()}
             }catch(e){}
         }
         return null;
+    }
+
+    async function fetchWithFallback(){
+        var cat=await fetchUrl(API_URL);
+        var extra=EXTRA_IDS.length?await fetchUrl(EXTRA_URL):[];
+        if(!cat&&!extra)return null;
+        var merged=cat||[];
+        var ids=new Set(merged.map(function(t){return t.id}));
+        (extra||[]).forEach(function(t){if(!ids.has(t.id)){merged.push(t);ids.add(t.id)}});
+        merged.sort(function(a,b){return(b.market_cap||0)-(a.market_cap||0)});
+        return merged;
     }
 
     function fmtUsd(n){
@@ -307,7 +320,7 @@
     async function loadData(){
         var data=await fetchWithFallback();
         if(!data){document.getElementById('table-body').innerHTML='<tr><td colspan="7" class="loading-msg">Failed to load data. Retrying...</td></tr>';setTimeout(loadData,5000);return}
-        allTokens=data.slice(0,10);
+        allTokens=data;
         updateStats();
         renderTable();
     }
