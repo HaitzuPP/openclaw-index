@@ -1,287 +1,221 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenClaw Index - Token Price Tracker</title>
-<meta name="description" content="Track the market performance of tokens in the OpenClaw and Moltbook ecosystem. Live prices, market caps, and volume data.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="OpenClaw Index - Token Price Tracker">
-<meta property="og:description" content="Track the market performance of tokens in the OpenClaw and Moltbook ecosystem. Live prices, market caps, and volume data.">
-<meta property="og:url" content="https://haitzupp.github.io/openclaw-index/">
-<meta property="og:site_name" content="OpenClaw Index">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="OpenClaw Index - Token Price Tracker">
-<meta name="twitter:description" content="Track the market performance of tokens in the OpenClaw and Moltbook ecosystem.">
-<link rel="canonical" href="https://haitzupp.github.io/openclaw-index/">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"OpenClaw Index","url":"https://haitzupp.github.io/openclaw-index/","description":"Track the market performance of tokens in the OpenClaw and Moltbook ecosystem."}</script>
-<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0b0a0b;--bg-card:#111;--border:#1a1a1a;--border-hover:#333;--text:#fff;--text-sec:#888;--text-muted:#555;--row-hover:#ffffff08;--accent:#ff6b35;--accent-start:#ff4444;--accent-end:#ff8c00;--green:#22c55e;--red:#ef4444}
-[data-theme="light"]{--bg:#fafafa;--bg-card:#fff;--border:#e0e0e0;--border-hover:#bbb;--text:#111;--text-sec:#555;--text-muted:#999;--row-hover:#00000008;--accent:#ff6b35;--accent-start:#ff4444;--accent-end:#ff8c00}
-body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;transition:background .3s,color .3s}
-a{color:inherit}
-.accent-gradient{background:linear-gradient(135deg,var(--accent-start),var(--accent-end));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-
-.sammy-banner{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 10%,var(--bg)),color-mix(in srgb,var(--accent) 12%,var(--bg)));border-bottom:1px solid color-mix(in srgb,var(--accent) 20%,var(--border));padding:0.5rem 2rem;display:flex;align-items:center;font-size:0.8rem}
-.sammy-banner a{color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:0.5rem;font-weight:500;transition:color .2s}
-.sammy-banner a:hover{color:color-mix(in srgb,var(--accent) 70%,var(--text))}
-.sammy-name{text-decoration:underline;text-underline-offset:3px}
-.sammy-x{width:13px;height:13px;fill:var(--accent);flex-shrink:0;margin-left:2px}
-.sammy-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;margin-right:8px}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-
-header{position:sticky;top:0;z-index:100;padding:1rem 2rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.logo{display:flex;align-items:center;gap:0.6rem;font-size:1.2rem;font-weight:600;text-decoration:none;color:var(--text);cursor:pointer}
-.logo-svg{width:30px;height:30px}
-nav{display:flex;align-items:center;gap:2rem}
-.nav-links{display:flex;gap:2rem;align-items:center}
-.nav-link{color:var(--text-sec);text-decoration:none;font-weight:500;font-size:.875rem;transition:color .2s}
-.nav-link:hover,.nav-link.active{color:var(--text)}
-.submit-btn{border:1px solid var(--text);background:transparent;color:var(--text);padding:.45rem 1rem;border-radius:6px;text-decoration:none;font-weight:500;font-size:.875rem;cursor:pointer;transition:all .2s}
-.submit-btn:hover{background:var(--text);color:var(--bg)}
-.theme-toggle{background:none;border:1px solid var(--border);color:var(--text-sec);width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-left:.5rem}
-.theme-toggle:hover{border-color:var(--text-sec);color:var(--text)}
-.nav-btns{display:flex;gap:10px;align-items:center}
-
-main{max-width:1200px;margin:0 auto;padding:3rem 2rem}
-.section-label{color:var(--text-muted);text-transform:uppercase;font-size:.7rem;font-weight:600;letter-spacing:1.5px;margin-bottom:1rem}
-.hero{margin-bottom:2rem}
-.hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:600;line-height:1.15;margin-bottom:1rem;font-family:'Fragment Mono',monospace}
-.hero-description{color:var(--text-sec);font-size:1.05rem;max-width:600px;line-height:1.7}
-
-.tickers{display:flex;gap:1.5rem;margin-bottom:2rem;flex-wrap:wrap}
-.ticker{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:.6rem 1rem;display:flex;align-items:center;gap:.5rem;font-size:.85rem}
-.ticker-label{color:var(--text-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
-.ticker-name{color:var(--text);font-weight:600}
-.ticker-pct{font-weight:600}
-
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-bottom:2rem}
-.stat{text-align:center;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem}
-.stat-number{font-size:1.8rem;font-weight:700;font-family:'Fragment Mono',monospace}
-.stat-label{color:var(--text-muted);text-transform:uppercase;font-size:.7rem;font-weight:600;letter-spacing:1px;margin-top:.25rem}
-
-.newsletter{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;margin-bottom:2.5rem;flex-wrap:wrap}
-.newsletter-left{font-family:'Fragment Mono',monospace;font-size:.85rem;font-weight:600;letter-spacing:.5px}
-.newsletter-right{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
-.newsletter-right input{padding:.5rem 1rem;border:1px solid var(--border);border-radius:20px;background:var(--bg);color:var(--text);font-size:.85rem;font-family:inherit;width:220px}
-.newsletter-right input::placeholder{color:var(--text-muted)}
-.join-btn{padding:.5rem 1.25rem;border:none;border-radius:20px;background:linear-gradient(135deg,var(--accent-start),var(--accent-end));color:#fff;font-weight:600;font-size:.85rem;cursor:pointer;font-family:inherit;transition:opacity .2s}
-.join-btn:hover{opacity:.85}
-.follow-link{color:var(--accent);text-decoration:none;font-size:.8rem;font-weight:500;margin-left:.5rem}
-.follow-link:hover{text-decoration:underline}
-
-.table-wrap{overflow-x:auto;margin-bottom:2rem}
-table{width:100%;border-collapse:collapse;font-size:.85rem}
-th{text-align:left;padding:.6rem .75rem;color:var(--text-sec);font-size:.7rem;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);font-weight:600}
-td{padding:.65rem .75rem;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text-sec)}
-tbody tr{transition:background .15s}
-tbody tr:hover{background:var(--row-hover)}
-.td-rank{color:var(--text-muted);font-weight:600;width:40px}
-.td-name{color:var(--text);font-weight:600;white-space:nowrap}
-.td-symbol{color:var(--text-muted);font-size:.8rem}
-.pct-pos{color:var(--green)}
-.pct-neg{color:var(--red)}
-.td-link a{color:var(--accent);text-decoration:none;font-size:.8rem}
-.td-link a:hover{text-decoration:underline}
-.token-icon{width:24px;height:24px;border-radius:50%;vertical-align:middle;margin-right:.5rem}
-.td-token{display:flex;align-items:center;gap:.5rem}
-
-.last-updated{color:var(--text-muted);font-size:.75rem;text-align:center;margin-bottom:2rem}
-
-footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--text-muted);font-size:.8rem}
-footer a{color:var(--text-sec);text-decoration:none;transition:color .2s}
-footer a:hover{color:var(--accent)}
-.built-by{display:inline-block;transition:transform .2s}
-.built-by:hover{transform:translateY(-2px)}
-
-@media(max-width:768px){
-header{flex-direction:column;gap:.75rem;padding:.75rem 1rem}
-nav{width:100%;flex-direction:column;gap:.75rem}
-.nav-links{gap:1.25rem;justify-content:center}
-.nav-btns{flex-direction:row;width:100%;justify-content:center}
-.sammy-banner{padding:.4rem 1rem;font-size:.72rem}
-main{padding:1.5rem 1rem}
-.hero{margin-bottom:1.5rem}
-.hero h1{font-size:1.75rem}
-.stats-row{grid-template-columns:1fr;gap:1rem}
-.stat-number{font-size:1.5rem}
-.newsletter{flex-direction:column;text-align:center;padding:1rem}
-.newsletter-right input{width:160px}
-.tickers{gap:.75rem}
-}
-@media(max-width:380px){
-main{padding:1.25rem .75rem}
-header{padding:.6rem .75rem}
-.hero h1{font-size:1.5rem}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Index</title>
+    <meta name="description" content="Track public tokens in the OpenClaw and Moltbook ecosystem. Live prices, market caps, and performance data.">
+    <meta property="og:title" content="OpenClaw Index">
+    <meta property="og:description" content="Token price tracker for the OpenClaw and Moltbook ecosystem.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="OpenClaw Index">
+    <meta name="twitter:description" content="Token price tracker for the OpenClaw and Moltbook ecosystem.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="canonical" href="https://haitzupp.github.io/openclaw-index/">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebSite","name":"OpenClaw Index","description":"Token price tracker for the OpenClaw and Moltbook ecosystem.","url":"https://haitzupp.github.io/openclaw-index/"}
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#0b0a0b;--bg-card:#111;--border:#1a1a1a;--border-hover:#333;--text:#fff;--text-sec:#888;--text-muted:#555;--accent:#ff6b35;--accent-start:#ff4444;--accent-end:#ff8c00;--accent-dim:color-mix(in srgb,#ff6b35 15%,var(--bg))}
+        [data-theme="light"]{--bg:#fafafa;--bg-card:#fff;--border:#e0e0e0;--border-hover:#ccc;--text:#111;--text-sec:#555;--text-muted:#999;--accent:#e55a2b;--accent-start:#dd3333;--accent-end:#e07000;--accent-dim:color-mix(in srgb,#e55a2b 12%,#fff)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;transition:background .3s,color .3s;min-height:100vh;display:flex;flex-direction:column}
+        h1,h2,h3{font-family:'Fragment Mono',monospace}
+        .accent{background:linear-gradient(135deg,var(--accent-start),var(--accent-end));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .sammy-banner{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 8%,var(--bg)),color-mix(in srgb,var(--accent) 10%,var(--bg)));border-bottom:1px solid color-mix(in srgb,var(--accent) 15%,var(--border));padding:.4rem 1.5rem;display:flex;align-items:center;font-size:.75rem}
+        .sammy-banner a{color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:.4rem;font-weight:500;transition:color .2s}
+        .sammy-banner a:hover{color:color-mix(in srgb,var(--accent) 70%,var(--text))}
+        .sammy-name{text-decoration:underline;text-underline-offset:3px}
+        .sammy-x{width:12px;height:12px;fill:var(--accent);flex-shrink:0}
+        .sammy-dot{width:5px;height:5px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;margin-right:6px}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+        header{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+        nav{max-width:1200px;margin:0 auto;padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+        .nav-brand{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--text);font-family:'Fragment Mono',monospace;font-size:1.1rem;font-weight:400}
+        .nav-brand svg{width:28px;height:28px}
+        .nav-links{display:flex;align-items:center;gap:1.5rem}
+        .nav-link{color:var(--text-sec);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.5px;transition:color .2s}
+        .nav-link:hover,.nav-link.active{color:var(--text)}
+        .submit-btn{border:1px solid var(--text-sec);background:transparent;color:var(--text);padding:.35rem .85rem;border-radius:6px;text-decoration:none;font-weight:500;font-size:.8rem;cursor:pointer;transition:all .2s}
+        .submit-btn:hover{background:var(--text);color:var(--bg)}
+        .theme-toggle{background:none;border:1px solid var(--border);color:var(--text-sec);cursor:pointer;padding:.35rem .5rem;border-radius:6px;font-size:.85rem;transition:all .2s}
+        .theme-toggle:hover{border-color:var(--border-hover);color:var(--text)}
+        .hamburger{display:none;background:none;border:none;color:var(--text);cursor:pointer;padding:.5rem}
+        .hamburger svg{width:24px;height:24px}
+        main{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;max-width:1200px;margin:0 auto;padding:6rem 1.5rem 4rem;width:100%}
+        .splash-label{font-size:.7rem;color:var(--accent);text-transform:uppercase;letter-spacing:3px;margin-bottom:1.25rem;text-align:center;font-weight:500}
+        .splash-title{font-size:clamp(36px,6vw,64px);font-weight:400;line-height:1.15;margin-bottom:1.25rem;text-align:center;letter-spacing:-0.02em}
+        .splash-sub{font-size:15px;color:var(--text-sec);max-width:520px;text-align:center;line-height:1.7;margin-bottom:4rem}
+        .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;width:100%;max-width:900px}
+        .card{display:flex;flex-direction:column;text-decoration:none;color:var(--text);background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem 1.75rem;transition:all .25s ease;position:relative;overflow:hidden}
+        .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent-start),var(--accent-end));opacity:0;transition:opacity .25s}
+        .card:hover{border-color:var(--border-hover);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.15)}
+        .card:hover::before{opacity:1}
+        .card-icon{font-size:1.25rem;margin-bottom:1.25rem;opacity:.6}
+        .card-title{font-family:'Fragment Mono',monospace;font-size:.95rem;font-weight:400;margin-bottom:.6rem}
+        .card-desc{font-size:.82rem;color:var(--text-sec);line-height:1.6;flex:1}
+        .card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)}
+        .card-count{font-family:'Fragment Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.5px}
+        .card-arrow{color:var(--text-muted);font-size:.8rem;transition:transform .2s,color .2s}
+        .card:hover .card-arrow{transform:translateX(3px);color:var(--accent)}
+        .stats{display:flex;gap:2.5rem;margin-top:3.5rem;text-align:center}
+        .stat-num{font-family:'Fragment Mono',monospace;font-size:clamp(20px,3vw,28px);font-weight:400;color:var(--text);margin-bottom:.25rem}
+        .stat-label{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+        .newsletter{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;margin-top:3rem;width:100%;max-width:900px;flex-wrap:wrap}
+        .newsletter-left{font-family:'Fragment Mono',monospace;font-size:.8rem;font-weight:400;text-transform:uppercase;letter-spacing:.5px;line-height:1.5}
+        .newsletter-right{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+        .newsletter-right input{padding:.45rem .85rem;border:1px solid var(--border);border-radius:20px;background:var(--bg);color:var(--text);font-size:.8rem;font-family:inherit;width:200px}
+        .newsletter-right input::placeholder{color:var(--text-muted)}
+        .join-btn{padding:.45rem 1.1rem;border:none;border-radius:20px;background:linear-gradient(135deg,var(--accent-start),var(--accent-end));color:#fff;font-weight:600;font-size:.8rem;cursor:pointer;font-family:inherit;text-decoration:none;transition:opacity .2s}
+        .join-btn:hover{opacity:.85}
+        .follow-link{color:var(--accent);text-decoration:none;font-size:.75rem;font-weight:500}
+        .follow-link:hover{text-decoration:underline}
+        footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center}
+        .footer-text{font-size:.75rem;color:var(--text-muted)}
+        .footer-text a{color:var(--text-sec);text-decoration:none}
+        .footer-text a:hover{color:var(--text)}
+        .built-by{display:inline-block;transition:transform .2s}
+        .built-by:hover{transform:translateY(-2px)}
+        @media(max-width:768px){
+            .hamburger{display:block}
+            .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:1rem 1.5rem;flex-direction:column;align-items:flex-start;gap:1rem}
+            .nav-links.open{display:flex}
+            main{padding:3rem 1rem 3rem;justify-content:flex-start;padding-top:2.5rem}
+            .splash-title{font-size:clamp(28px,8vw,40px)}
+            .splash-sub{font-size:14px;margin-bottom:2.5rem;max-width:100%}
+            .cards{grid-template-columns:1fr;gap:1rem;max-width:100%}
+            .card{padding:1.5rem 1.25rem}
+            .stats{gap:1.5rem;margin-top:2.5rem;flex-wrap:wrap;justify-content:center}
+            .newsletter{flex-direction:column;text-align:center;padding:1rem}
+            .newsletter-right input{width:160px}
+            .sammy-banner{padding:.35rem 1rem;font-size:.7rem}
+        }
+        @media(min-width:1025px){main{padding:8rem 2rem 5rem}}
+    </style>
+    <script>(function(){var t=localStorage.getItem('openclaw-index-theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
 </head>
 <body>
-<div class="sammy-banner">
-<span class="sammy-dot"></span>
-<a href="https://x.com/0xSammy" target="_blank" rel="noopener">
-Built by <span class="sammy-name">0xSammy</span>
-<svg class="sammy-x" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-</a>
-</div>
+    <div class="sammy-banner">
+        <span class="sammy-dot"></span>
+        <a href="https://x.com/0xSammy" target="_blank" rel="noopener">
+            Built by <span class="sammy-name">0xSammy</span>
+            <svg class="sammy-x" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+    </div>
+    <header>
+        <nav>
+            <a href="index.html" class="nav-brand">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4444"/><stop offset="100%" stop-color="#ff8c00"/></linearGradient></defs>
+                    <rect width="32" height="32" rx="6" fill="#111"/>
+                    <path d="M8 24C8 15 11.5 7 16 7C20.5 7 24 15 24 24" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M11.5 22C11.5 16 13.5 10 16 10C18.5 10 20.5 16 20.5 22" stroke="url(#lg)" stroke-width="1.8" stroke-linecap="round"/>
+                    <circle cx="16" cy="24" r="2" fill="url(#lg)"/>
+                    <line x1="16" y1="7" x2="16" y2="4" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="10" y1="9" x2="8" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
+                    <line x1="22" y1="9" x2="24" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+                OpenClaw Index
+            </a>
+            <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link active">HOME</a>
+                <a href="tokens.html" class="nav-link">TOKENS</a>
+                <a href="about.html" class="nav-link">ABOUT</a>
+                <a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="submit-btn">Submit Listing</a>
+                <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">&#9728;</button>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="splash-label">OpenClaw Index</div>
+        <h1 class="splash-title">Track <span class="accent">OpenClaw Tokens.</span></h1>
+        <p class="splash-sub">Live market data for public tokens in the OpenClaw and Moltbook ecosystem. Prices, market caps, and performance tracking.</p>
+        <div class="cards">
+            <a href="tokens.html" class="card">
+                <div class="card-icon">&#9651;</div>
+                <div class="card-title">Tokens</div>
+                <div class="card-desc">Live prices, market caps, 24h and 7d changes for OpenClaw ecosystem tokens via CoinGecko.</div>
+                <div class="card-footer">
+                    <div class="card-count" id="card-count">-- tokens</div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+            </a>
+            <a href="https://www.0xsammy.com/" target="_blank" rel="noopener" class="card">
+                <div class="card-icon">&#9670;</div>
+                <div class="card-title">Newsletter</div>
+                <div class="card-desc">Subscribe to the OpenClaw Index newsletter on Substack. Market updates and ecosystem coverage.</div>
+                <div class="card-footer">
+                    <div class="card-count">Substack</div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+            </a>
+            <a href="about.html" class="card">
+                <div class="card-icon">&#9633;</div>
+                <div class="card-title">About</div>
+                <div class="card-desc">Powered by Khala Research. What OpenClaw Index tracks and how it works.</div>
+                <div class="card-footer">
+                    <div class="card-count">Info</div>
+                    <div class="card-arrow">&rarr;</div>
+                </div>
+            </a>
+        </div>
+        <div class="stats">
+            <div>
+                <div class="stat-num" id="stat-tokens">--</div>
+                <div class="stat-label">Tokens</div>
+            </div>
+            <div>
+                <div class="stat-num" id="stat-mcap">--</div>
+                <div class="stat-label">Total Market Cap</div>
+            </div>
+            <div>
+                <div class="stat-num" id="stat-vol">--</div>
+                <div class="stat-label">24h Volume</div>
+            </div>
+        </div>
+        <div class="newsletter">
+            <div class="newsletter-left">Subscribe to the<br>OpenClaw Index Newsletter</div>
+            <div class="newsletter-right">
+                <input type="email" placeholder="EMAIL" readonly onclick="window.open('https://www.0xsammy.com/','_blank')">
+                <a href="https://www.0xsammy.com/" target="_blank" rel="noopener" class="join-btn">JOIN NOW</a>
+                <a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="follow-link">Follow @0xSammy</a>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p class="footer-text">&copy; 2026 OpenClaw Index. All rights reserved.</p>
+        <p class="footer-text" style="margin-top:.5rem"><a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="built-by">Built by 0xSammy</a></p>
+    </footer>
+    <script>
+    function toggleTheme(){var t=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('openclaw-index-theme',t);document.getElementById('theme-btn').innerHTML=t==='light'?'&#9790;':'&#9728;'}
+    (function(){if(localStorage.getItem('openclaw-index-theme')==='light')document.getElementById('theme-btn').innerHTML='&#9790;'})();
 
-<header>
-<a href="index.html" class="logo">
-<svg class="logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4444"/><stop offset="100%" stop-color="#ff8c00"/></linearGradient></defs>
-<rect width="32" height="32" rx="6" fill="#111"/>
-<path d="M8 24C8 15 11.5 7 16 7C20.5 7 24 15 24 24" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round"/>
-<path d="M11.5 22C11.5 16 13.5 10 16 10C18.5 10 20.5 16 20.5 22" stroke="url(#lg)" stroke-width="1.8" stroke-linecap="round"/>
-<circle cx="16" cy="24" r="2" fill="url(#lg)"/>
-<line x1="16" y1="7" x2="16" y2="4" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
-<line x1="10" y1="9" x2="8" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
-<line x1="22" y1="9" x2="24" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
-</svg>
-<span>OpenClaw Index</span>
-</a>
-<nav>
-<div class="nav-links">
-<a href="index.html" class="nav-link active">HOME</a>
-<a href="about.html" class="nav-link">ABOUT</a>
-</div>
-<div class="nav-btns">
-<a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="submit-btn">Submit Listing</a>
-<button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" id="theme-btn">&#9728;</button>
-</div>
-</nav>
-</header>
+    var API_URL='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=moltbook-and-openclaw-themed&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h,7d';
+    var PROXIES=[function(u){return u},function(u){return'https://corsproxy.io/?'+encodeURIComponent(u)},function(u){return'https://api.allorigins.win/raw?url='+encodeURIComponent(u)}];
 
-<main>
-<div class="hero">
-<div class="section-label">OPENCLAW INDEX</div>
-<h1>The <span class="accent-gradient">OpenClaw</span> Token<br>Price Index.</h1>
-<p class="hero-description">Track the market performance of tokens in the OpenClaw and Moltbook ecosystem. Live data sourced from CoinGecko.</p>
-</div>
+    function fmtUsd(n){if(n==null)return'--';if(n>=1e9)return'$'+(n/1e9).toFixed(2)+'B';if(n>=1e6)return'$'+(n/1e6).toFixed(2)+'M';if(n>=1e3)return'$'+(n/1e3).toFixed(1)+'K';return'$'+n.toFixed(2)}
 
-<div class="tickers" id="tickers"></div>
-
-<div class="stats-row">
-<div class="stat"><div class="stat-number" id="stat-mcap">--</div><div class="stat-label">Total Market Cap</div></div>
-<div class="stat"><div class="stat-number" id="stat-vol">--</div><div class="stat-label">24h Volume</div></div>
-<div class="stat"><div class="stat-number" id="stat-count">--</div><div class="stat-label"># of Tokens</div></div>
-</div>
-
-<div class="newsletter">
-<div class="newsletter-left">SUBSCRIBE TO THE OPENCLAW INDEX NEWSLETTER</div>
-<div class="newsletter-right">
-<input type="email" placeholder="your@email.com" id="nl-email">
-<a href="https://www.0xsammy.com/" target="_blank" rel="noopener" class="join-btn" onclick="return true;">JOIN NOW</a>
-<a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="follow-link">Follow @0xSammy</a>
-</div>
-</div>
-
-<div class="section-label">TOKEN RANKINGS</div>
-<div class="table-wrap">
-<table>
-<thead><tr><th>#</th><th>Token</th><th>Symbol</th><th>Price</th><th>24h %</th><th>7d %</th><th>Market Cap</th><th>Volume</th><th>Links</th></tr></thead>
-<tbody id="token-tbody"><tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:2rem">Loading token data...</td></tr></tbody>
-</table>
-</div>
-<div class="last-updated" id="last-updated"></div>
-
-<div style="text-align:center;margin:2rem 0">
-<a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="submit-btn" style="padding:.6rem 1.5rem;font-size:.9rem">DM @0xSammy to submit a listing</a>
-</div>
-</main>
-
-<footer>
-<p>&copy; 2026 OpenClaw Index. All rights reserved.</p>
-<p style="margin-top:.5rem"><a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="built-by">Built by 0xSammy</a></p>
-</footer>
-
-<script>
-(function(){
-var THEME_KEY='openclaw-index-theme';
-var saved=localStorage.getItem(THEME_KEY);
-if(saved==='light')document.documentElement.setAttribute('data-theme','light');
-window.toggleTheme=function(){
-var cur=document.documentElement.getAttribute('data-theme');
-var next=cur==='light'?'dark':'light';
-if(next==='dark'){document.documentElement.removeAttribute('data-theme')}else{document.documentElement.setAttribute('data-theme','light')}
-localStorage.setItem(THEME_KEY,next);
-document.getElementById('theme-btn').innerHTML=next==='light'?'&#9790;':'&#9728;';
-};
-if(saved==='light')document.getElementById('theme-btn').innerHTML='&#9790;';
-})();
-
-var FALLBACK_DATA=[
-{name:'KellyClaude',symbol:'KELLYCLAUDE',current_price:0.00012874,price_change_percentage_24h_in_currency:-6.0,price_change_percentage_7d_in_currency:80.7,market_cap:12873895,total_volume:6121442,id:'kellyclaude'},
-{name:'CLAWNCH',symbol:'CLAWNCH',current_price:0.00011701,price_change_percentage_24h_in_currency:-33.0,price_change_percentage_7d_in_currency:164.3,market_cap:11700657,total_volume:9195056,id:'clawnch'},
-{name:'clawd.atg.eth',symbol:'CLAWD',current_price:0.00005808,price_change_percentage_24h_in_currency:-19.9,price_change_percentage_7d_in_currency:-15.8,market_cap:5817556,total_volume:2325438,id:'clawd-atg-eth'},
-{name:'Moltbook',symbol:'MOLT',current_price:0.00005522,price_change_percentage_24h_in_currency:-15.4,price_change_percentage_7d_in_currency:-49.3,market_cap:5527088,total_volume:2980277,id:'moltbook'},
-{name:'fomolt',symbol:'FOMOLT',current_price:0.00000958,price_change_percentage_24h_in_currency:-17.5,price_change_percentage_7d_in_currency:354.1,market_cap:958345,total_volume:383379,id:'fomolt'},
-{name:'MOLT BUNKER',symbol:'BUNKER',current_price:0.00000542,price_change_percentage_24h_in_currency:-15.2,price_change_percentage_7d_in_currency:82.6,market_cap:541724,total_volume:139345,id:'molt-bunker'},
-{name:'ClawCloudX',symbol:'CLOUDX',current_price:0.00000428,price_change_percentage_24h_in_currency:-22.5,price_change_percentage_7d_in_currency:0,market_cap:427819,total_volume:87009,id:'clawcloudx'}
-];
-
-var API_URL='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=moltbook-and-openclaw-themed&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h,7d';
-
-function fetchWithTimeout(url,ms){var c=new AbortController();var t=setTimeout(function(){c.abort()},ms);return fetch(url,{signal:c.signal}).then(function(r){clearTimeout(t);return r})}
-
-function fetchData(){
-fetchWithTimeout(API_URL,8000).then(function(r){if(!r.ok)throw new Error('fail');return r.json()}).then(render).catch(function(){
-fetchWithTimeout('https://corsproxy.io/?'+encodeURIComponent(API_URL),8000).then(function(r){if(!r.ok)throw new Error('fail');return r.json()}).then(render).catch(function(){
-fetchWithTimeout('https://api.allorigins.win/raw?url='+encodeURIComponent(API_URL),8000).then(function(r){if(!r.ok)throw new Error('fail');return r.json()}).then(render).catch(function(){
-render(FALLBACK_DATA);
-})})});
-}
-
-function fmt(n){if(n==null)return '--';if(n>=1e9)return '$'+( n/1e9).toFixed(2)+'B';if(n>=1e6)return '$'+(n/1e6).toFixed(2)+'M';if(n>=1e3)return '$'+(n/1e3).toFixed(1)+'K';return '$'+n.toFixed(2)}
-function fmtPrice(n){if(n==null)return '--';if(n>=1)return '$'+n.toFixed(2);if(n>=0.01)return '$'+n.toFixed(4);return '$'+n.toFixed(6)}
-function fmtPct(n){if(n==null)return '<span style="color:var(--text-muted)">--</span>';var cls=n>=0?'pct-pos':'pct-neg';var sign=n>=0?'+':'';return '<span class="'+cls+'">'+sign+n.toFixed(1)+'%</span>'}
-
-function render(data){
-var tokens=data.slice(0,10);
-var tbody=document.getElementById('token-tbody');
-var html='';
-var totalMcap=0,totalVol=0;
-tokens.forEach(function(t,i){
-totalMcap+=(t.market_cap||0);
-totalVol+=(t.total_volume||0);
-var img=t.image?'<img class="token-icon" src="'+t.image+'" alt="" onerror="this.style.display=\'none\'">':'';
-html+='<tr>';
-html+='<td class="td-rank">'+(i+1)+'</td>';
-html+='<td><div class="td-token">'+img+'<span class="td-name">'+t.name+'</span></div></td>';
-html+='<td class="td-symbol">'+(t.symbol||'').toUpperCase()+'</td>';
-html+='<td>'+fmtPrice(t.current_price)+'</td>';
-html+='<td>'+fmtPct(t.price_change_percentage_24h_in_currency)+'</td>';
-html+='<td>'+fmtPct(t.price_change_percentage_7d_in_currency)+'</td>';
-html+='<td>'+fmt(t.market_cap)+'</td>';
-html+='<td>'+fmt(t.total_volume)+'</td>';
-html+='<td class="td-link"><a href="https://www.coingecko.com/en/coins/'+t.id+'" target="_blank" rel="noopener">CoinGecko</a></td>';
-html+='</tr>';
-});
-tbody.innerHTML=html;
-document.getElementById('stat-mcap').textContent=fmt(totalMcap).replace('$','$');
-document.getElementById('stat-vol').textContent=fmt(totalVol);
-document.getElementById('stat-count').textContent=tokens.length;
-
-var topMover=null,bigDrop=null;
-tokens.forEach(function(t){
-var pct=t.price_change_percentage_24h_in_currency;
-if(pct!=null){
-if(!topMover||pct>topMover.price_change_percentage_24h_in_currency)topMover=t;
-if(!bigDrop||pct<bigDrop.price_change_percentage_24h_in_currency)bigDrop=t;
-}
-});
-var tickerHtml='';
-if(topMover){tickerHtml+='<div class="ticker"><span class="ticker-label">Top Mover</span><span class="ticker-name">'+topMover.name+'</span><span class="ticker-pct pct-pos">+'+topMover.price_change_percentage_24h_in_currency.toFixed(1)+'%</span></div>';}
-if(bigDrop&&bigDrop.price_change_percentage_24h_in_currency<0){tickerHtml+='<div class="ticker"><span class="ticker-label">Biggest Drop</span><span class="ticker-name">'+bigDrop.name+'</span><span class="ticker-pct pct-neg">'+bigDrop.price_change_percentage_24h_in_currency.toFixed(1)+'%</span></div>';}
-document.getElementById('tickers').innerHTML=tickerHtml;
-
-document.getElementById('last-updated').textContent='Last updated: '+new Date().toLocaleTimeString()+' - Auto-refreshes every 60s';
-}
-
-fetchData();
-setInterval(fetchData,60000);
-</script>
+    async function loadStats(){
+        for(var i=0;i<PROXIES.length;i++){
+            try{
+                var ctrl=new AbortController();var tid=setTimeout(function(){ctrl.abort()},8000);
+                var r=await fetch(PROXIES[i](API_URL),{signal:ctrl.signal});clearTimeout(tid);
+                if(r.ok){
+                    var data=await r.json();var tokens=data.slice(0,10);
+                    var mc=0,vol=0;tokens.forEach(function(t){mc+=(t.market_cap||0);vol+=(t.total_volume||0)});
+                    document.getElementById('stat-tokens').textContent=tokens.length;
+                    document.getElementById('stat-mcap').textContent=fmtUsd(mc);
+                    document.getElementById('stat-vol').textContent=fmtUsd(vol);
+                    document.getElementById('card-count').textContent=tokens.length+' tokens';
+                    return;
+                }
+            }catch(e){}
+        }
+    }
+    loadStats();
+    </script>
 </body>
 </html>

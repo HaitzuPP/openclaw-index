@@ -1,151 +1,144 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About - OpenClaw Index</title>
-<meta name="description" content="About OpenClaw Index. Powered by Khala Research. Tracking the OpenClaw and Moltbook token ecosystem.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="About - OpenClaw Index">
-<meta property="og:description" content="About OpenClaw Index. Powered by Khala Research.">
-<meta property="og:url" content="https://haitzupp.github.io/openclaw-index/about.html">
-<meta property="og:site_name" content="OpenClaw Index">
-<link rel="canonical" href="https://haitzupp.github.io/openclaw-index/about.html">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0b0a0b;--bg-card:#111;--border:#1a1a1a;--border-hover:#333;--text:#fff;--text-sec:#888;--text-muted:#555;--accent:#ff6b35;--accent-start:#ff4444;--accent-end:#ff8c00}
-[data-theme="light"]{--bg:#fafafa;--bg-card:#fff;--border:#e0e0e0;--border-hover:#bbb;--text:#111;--text-sec:#555;--text-muted:#999;--accent:#ff6b35}
-body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;transition:background .3s,color .3s}
-a{color:inherit}
-.accent-gradient{background:linear-gradient(135deg,var(--accent-start),var(--accent-end));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sammy-banner{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 10%,var(--bg)),color-mix(in srgb,var(--accent) 12%,var(--bg)));border-bottom:1px solid color-mix(in srgb,var(--accent) 20%,var(--border));padding:0.5rem 2rem;display:flex;align-items:center;font-size:0.8rem}
-.sammy-banner a{color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:0.5rem;font-weight:500;transition:color .2s}
-.sammy-banner a:hover{color:color-mix(in srgb,var(--accent) 70%,var(--text))}
-.sammy-name{text-decoration:underline;text-underline-offset:3px}
-.sammy-x{width:13px;height:13px;fill:var(--accent);flex-shrink:0;margin-left:2px}
-.sammy-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;margin-right:8px}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-header{position:sticky;top:0;z-index:100;padding:1rem 2rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.logo{display:flex;align-items:center;gap:0.6rem;font-size:1.2rem;font-weight:600;text-decoration:none;color:var(--text);cursor:pointer}
-.logo-svg{width:30px;height:30px}
-nav{display:flex;align-items:center;gap:2rem}
-.nav-links{display:flex;gap:2rem;align-items:center}
-.nav-link{color:var(--text-sec);text-decoration:none;font-weight:500;font-size:.875rem;transition:color .2s}
-.nav-link:hover,.nav-link.active{color:var(--text)}
-.submit-btn{border:1px solid var(--text);background:transparent;color:var(--text);padding:.45rem 1rem;border-radius:6px;text-decoration:none;font-weight:500;font-size:.875rem;cursor:pointer;transition:all .2s}
-.submit-btn:hover{background:var(--text);color:var(--bg)}
-.theme-toggle{background:none;border:1px solid var(--border);color:var(--text-sec);width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;margin-left:.5rem}
-.theme-toggle:hover{border-color:var(--text-sec);color:var(--text)}
-.nav-btns{display:flex;gap:10px;align-items:center}
-main{max-width:800px;margin:0 auto;padding:4rem 2rem}
-h1{font-size:2rem;font-weight:600;margin-bottom:1.5rem;font-family:'Fragment Mono',monospace}
-.about-section{margin-bottom:2.5rem}
-.about-section h2{font-size:1.2rem;font-weight:600;margin-bottom:.75rem;font-family:'Fragment Mono',monospace}
-.about-section p{color:var(--text-sec);line-height:1.8;font-size:.95rem;margin-bottom:1rem}
-.about-section a{color:var(--accent);text-decoration:none}
-.about-section a:hover{text-decoration:underline}
-.powered{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;margin-top:3rem}
-.powered h3{font-size:1.1rem;font-weight:600;margin-bottom:.5rem}
-.powered p{color:var(--text-sec);font-size:.9rem}
-.powered a{color:var(--accent);text-decoration:none;font-weight:600}
-.powered a:hover{text-decoration:underline}
-footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--text-muted);font-size:.8rem}
-footer a{color:var(--text-sec);text-decoration:none;transition:color .2s}
-footer a:hover{color:var(--accent)}
-.built-by{display:inline-block;transition:transform .2s}
-.built-by:hover{transform:translateY(-2px)}
-@media(max-width:768px){
-header{flex-direction:column;gap:.75rem;padding:.75rem 1rem}
-nav{width:100%;flex-direction:column;gap:.75rem}
-.nav-links{gap:1.25rem;justify-content:center}
-.nav-btns{flex-direction:row;width:100%;justify-content:center}
-.sammy-banner{padding:.4rem 1rem;font-size:.72rem}
-main{padding:2rem 1rem}
-h1{font-size:1.5rem}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - OpenClaw Index</title>
+    <meta name="description" content="About OpenClaw Index. Powered by Khala Research. Tracking the OpenClaw and Moltbook token ecosystem.">
+    <meta property="og:title" content="About - OpenClaw Index">
+    <meta property="og:description" content="About OpenClaw Index. Powered by Khala Research.">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="canonical" href="https://haitzupp.github.io/openclaw-index/about.html">
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#0b0a0b;--bg-card:#111;--border:#1a1a1a;--border-hover:#333;--text:#fff;--text-sec:#888;--text-muted:#555;--accent:#ff6b35;--accent-start:#ff4444;--accent-end:#ff8c00;--accent-dim:color-mix(in srgb,#ff6b35 15%,var(--bg))}
+        [data-theme="light"]{--bg:#fafafa;--bg-card:#fff;--border:#e0e0e0;--border-hover:#ccc;--text:#111;--text-sec:#555;--text-muted:#999;--accent:#e55a2b;--accent-start:#dd3333;--accent-end:#e07000;--accent-dim:color-mix(in srgb,#e55a2b 12%,#fff)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;transition:background .3s,color .3s;min-height:100vh;display:flex;flex-direction:column}
+        h1,h2,h3{font-family:'Fragment Mono',monospace}
+        .accent{background:linear-gradient(135deg,var(--accent-start),var(--accent-end));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .sammy-banner{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 8%,var(--bg)),color-mix(in srgb,var(--accent) 10%,var(--bg)));border-bottom:1px solid color-mix(in srgb,var(--accent) 15%,var(--border));padding:.4rem 1.5rem;display:flex;align-items:center;font-size:.75rem}
+        .sammy-banner a{color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:.4rem;font-weight:500;transition:color .2s}
+        .sammy-banner a:hover{color:color-mix(in srgb,var(--accent) 70%,var(--text))}
+        .sammy-name{text-decoration:underline;text-underline-offset:3px}
+        .sammy-x{width:12px;height:12px;fill:var(--accent);flex-shrink:0}
+        .sammy-dot{width:5px;height:5px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;margin-right:6px}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+        header{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+        nav{max-width:1200px;margin:0 auto;padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+        .nav-brand{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--text);font-family:'Fragment Mono',monospace;font-size:1.1rem;font-weight:400}
+        .nav-brand svg{width:28px;height:28px}
+        .nav-links{display:flex;align-items:center;gap:1.5rem}
+        .nav-link{color:var(--text-sec);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.5px;transition:color .2s}
+        .nav-link:hover,.nav-link.active{color:var(--text)}
+        .submit-btn{border:1px solid var(--text-sec);background:transparent;color:var(--text);padding:.35rem .85rem;border-radius:6px;text-decoration:none;font-weight:500;font-size:.8rem;cursor:pointer;transition:all .2s}
+        .submit-btn:hover{background:var(--text);color:var(--bg)}
+        .theme-toggle{background:none;border:1px solid var(--border);color:var(--text-sec);cursor:pointer;padding:.35rem .5rem;border-radius:6px;font-size:.85rem;transition:all .2s}
+        .theme-toggle:hover{border-color:var(--border-hover);color:var(--text)}
+        .hamburger{display:none;background:none;border:none;color:var(--text);cursor:pointer;padding:.5rem}
+        .hamburger svg{width:24px;height:24px}
+        .content{flex:1;max-width:800px;margin:0 auto;padding:4rem 1.5rem}
+        .content-label{font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
+        .content h1{font-size:clamp(24px,3.5vw,40px);font-weight:400;line-height:1.2;margin-bottom:1.5rem}
+        .content p{color:var(--text-sec);font-size:.95rem;line-height:1.8;margin-bottom:1.25rem}
+        .content a{color:var(--accent);text-decoration:none}
+        .content a:hover{text-decoration:underline}
+        .info-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin:2rem 0}
+        .info-card h3{font-size:.9rem;font-weight:400;margin-bottom:.75rem;color:var(--text)}
+        .info-card ul{list-style:none;padding:0}
+        .info-card li{color:var(--text-sec);font-size:.85rem;padding:.3rem 0;padding-left:1rem;position:relative}
+        .info-card li::before{content:'';position:absolute;left:0;top:.65rem;width:4px;height:4px;background:var(--accent);border-radius:50%}
+        footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center}
+        .footer-text{font-size:.75rem;color:var(--text-muted)}
+        .footer-text a{color:var(--text-sec);text-decoration:none}
+        .footer-text a:hover{color:var(--text)}
+        .built-by{display:inline-block;transition:transform .2s}
+        .built-by:hover{transform:translateY(-2px)}
+        @media(max-width:768px){
+            .hamburger{display:block}
+            .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:1rem 1.5rem;flex-direction:column;align-items:flex-start;gap:1rem}
+            .nav-links.open{display:flex}
+            .content{padding:2.5rem 1rem}
+            .sammy-banner{padding:.35rem 1rem;font-size:.7rem}
+        }
+    </style>
+    <script>(function(){var t=localStorage.getItem('openclaw-index-theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
 </head>
 <body>
-<div class="sammy-banner">
-<span class="sammy-dot"></span>
-<a href="https://x.com/0xSammy" target="_blank" rel="noopener">
-Built by <span class="sammy-name">0xSammy</span>
-<svg class="sammy-x" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-</a>
-</div>
+    <div class="sammy-banner">
+        <span class="sammy-dot"></span>
+        <a href="https://x.com/0xSammy" target="_blank" rel="noopener">
+            Built by <span class="sammy-name">0xSammy</span>
+            <svg class="sammy-x" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+    </div>
+    <header>
+        <nav>
+            <a href="index.html" class="nav-brand">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4444"/><stop offset="100%" stop-color="#ff8c00"/></linearGradient></defs>
+                    <rect width="32" height="32" rx="6" fill="#111"/>
+                    <path d="M8 24C8 15 11.5 7 16 7C20.5 7 24 15 24 24" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M11.5 22C11.5 16 13.5 10 16 10C18.5 10 20.5 16 20.5 22" stroke="url(#lg)" stroke-width="1.8" stroke-linecap="round"/>
+                    <circle cx="16" cy="24" r="2" fill="url(#lg)"/>
+                    <line x1="16" y1="7" x2="16" y2="4" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="10" y1="9" x2="8" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
+                    <line x1="22" y1="9" x2="24" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+                OpenClaw Index
+            </a>
+            <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="tokens.html" class="nav-link">TOKENS</a>
+                <a href="about.html" class="nav-link active">ABOUT</a>
+                <a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="submit-btn">Submit Listing</a>
+                <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">&#9728;</button>
+            </div>
+        </nav>
+    </header>
 
-<header>
-<a href="index.html" class="logo">
-<svg class="logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4444"/><stop offset="100%" stop-color="#ff8c00"/></linearGradient></defs>
-<rect width="32" height="32" rx="6" fill="#111"/>
-<path d="M8 24C8 15 11.5 7 16 7C20.5 7 24 15 24 24" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round"/>
-<path d="M11.5 22C11.5 16 13.5 10 16 10C18.5 10 20.5 16 20.5 22" stroke="url(#lg)" stroke-width="1.8" stroke-linecap="round"/>
-<circle cx="16" cy="24" r="2" fill="url(#lg)"/>
-<line x1="16" y1="7" x2="16" y2="4" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
-<line x1="10" y1="9" x2="8" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
-<line x1="22" y1="9" x2="24" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
-</svg>
-<span>OpenClaw Index</span>
-</a>
-<nav>
-<div class="nav-links">
-<a href="index.html" class="nav-link">HOME</a>
-<a href="about.html" class="nav-link active">ABOUT</a>
-</div>
-<div class="nav-btns">
-<a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="submit-btn">Submit Listing</a>
-<button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" id="theme-btn">&#9728;</button>
-</div>
-</nav>
-</header>
+    <div class="content">
+        <div class="content-label">About</div>
+        <h1>About <span class="accent">OpenClaw Index</span></h1>
 
-<main>
-<h1>About <span class="accent-gradient">OpenClaw Index</span></h1>
+        <p>OpenClaw Index tracks the market performance of public tokens in the OpenClaw and Moltbook ecosystem. All market data is sourced live from <a href="https://www.coingecko.com/en/categories/moltbook-and-openclaw-themed" target="_blank" rel="noopener">CoinGecko</a> and refreshes every 60 seconds.</p>
 
-<div class="about-section">
-<h2>What is OpenClaw Index?</h2>
-<p>OpenClaw Index tracks the market performance of tokens in the OpenClaw and Moltbook ecosystem. Data sourced from CoinGecko.</p>
-<p>We provide live price tracking, market cap rankings, volume data, and percentage changes for the top tokens in the ecosystem. The index auto-refreshes every 60 seconds to keep you up to date.</p>
-</div>
+        <p>The index covers tokens listed under the Moltbook and OpenClaw-themed category on CoinGecko, ranked by market capitalization. Each token includes live pricing, 24-hour and 7-day performance, market cap, and trading volume.</p>
 
-<div class="about-section">
-<h2>Data Sources</h2>
-<p>All market data is fetched directly from the <a href="https://www.coingecko.com/" target="_blank" rel="noopener">CoinGecko API</a>. Prices, market caps, and volume figures are denominated in USD.</p>
-</div>
+        <div class="info-card">
+            <h3>What We Track</h3>
+            <ul>
+                <li>Public tokens in the OpenClaw and Moltbook ecosystem</li>
+                <li>Live prices and market caps via CoinGecko API</li>
+                <li>24-hour and 7-day price performance</li>
+                <li>Trading volume and fully diluted valuations</li>
+                <li>Top gainers and biggest losers</li>
+            </ul>
+        </div>
 
-<div class="about-section">
-<h2>Submit a Listing</h2>
-<p>Want your token listed on the OpenClaw Index? Reach out to <a href="https://x.com/0xSammy" target="_blank" rel="noopener">@0xSammy on X</a> to submit your project for review.</p>
-</div>
+        <div class="info-card">
+            <h3>Submit a Listing</h3>
+            <ul>
+                <li>To submit a token for inclusion, DM <a href="https://x.com/0xSammy" target="_blank" rel="noopener">@0xSammy</a> on X</li>
+                <li>Tokens must be listed on CoinGecko under the Moltbook/OpenClaw category</li>
+            </ul>
+        </div>
 
-<div class="powered">
-<h3>Powered by <a href="https://khala.io" target="_blank" rel="noopener">Khala Research</a></h3>
-<p>Independent research and data for the OpenClaw ecosystem.</p>
-</div>
-</main>
+        <p style="margin-top:2rem">Powered by <a href="https://khala.io" target="_blank" rel="noopener">Khala Research</a>.</p>
 
-<footer>
-<p>&copy; 2025 OpenClaw Index. All rights reserved.</p>
-<p style="margin-top:.5rem"><a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="built-by">Built by 0xSammy</a></p>
-</footer>
+        <p>Subscribe to the newsletter on <a href="https://www.0xsammy.com/" target="_blank" rel="noopener">Substack</a> for ecosystem updates and market coverage.</p>
+    </div>
 
-<script>
-(function(){
-var THEME_KEY='openclaw-index-theme';
-var saved=localStorage.getItem(THEME_KEY);
-if(saved==='light')document.documentElement.setAttribute('data-theme','light');
-window.toggleTheme=function(){
-var cur=document.documentElement.getAttribute('data-theme');
-var next=cur==='light'?'dark':'light';
-if(next==='dark'){document.documentElement.removeAttribute('data-theme')}else{document.documentElement.setAttribute('data-theme','light')}
-localStorage.setItem(THEME_KEY,next);
-document.getElementById('theme-btn').innerHTML=next==='light'?'&#9790;':'&#9728;';
-};
-if(saved==='light')document.getElementById('theme-btn').innerHTML='&#9790;';
-})();
-</script>
+    <footer>
+        <p class="footer-text">&copy; 2026 OpenClaw Index. All rights reserved.</p>
+        <p class="footer-text" style="margin-top:.5rem"><a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="built-by">Built by 0xSammy</a></p>
+    </footer>
+
+    <script>
+    function toggleTheme(){var t=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('openclaw-index-theme',t);document.getElementById('theme-btn').innerHTML=t==='light'?'&#9790;':'&#9728;'}
+    (function(){if(localStorage.getItem('openclaw-index-theme')==='light')document.getElementById('theme-btn').innerHTML='&#9790;'})();
+    </script>
 </body>
 </html>

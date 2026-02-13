@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw Index | Token Tracker</title>
+    <meta name="description" content="Live prices and market data for OpenClaw and Moltbook ecosystem tokens. Updated every 60 seconds.">
+    <meta property="og:title" content="OpenClaw Index | Token Tracker">
+    <meta property="og:description" content="Live token price tracker for the OpenClaw and Moltbook ecosystem.">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="canonical" href="https://haitzupp.github.io/openclaw-index/tokens.html">
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#0b0a0b;--bg-card:#111;--border:#1a1a1a;--border-hover:#333;--text:#fff;--text-sec:#888;--text-muted:#555;--accent:#ff6b35;--accent-start:#ff4444;--accent-end:#ff8c00;--accent-dim:color-mix(in srgb,#ff6b35 15%,var(--bg));--green:#22c55e;--red:#ef4444;--red-dim:color-mix(in srgb,#ef4444 15%,var(--bg))}
+        [data-theme="light"]{--bg:#fafafa;--bg-card:#fff;--border:#e0e0e0;--border-hover:#ccc;--text:#111;--text-sec:#555;--text-muted:#999;--accent:#e55a2b;--accent-start:#dd3333;--accent-end:#e07000;--accent-dim:color-mix(in srgb,#e55a2b 12%,#fff);--green:#16a34a;--red:#dc2626;--red-dim:color-mix(in srgb,#dc2626 12%,#fff)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;transition:background .3s,color .3s}
+        h1,h2,h3,.stat-number{font-family:'Fragment Mono',monospace}
+        .accent{background:linear-gradient(135deg,var(--accent-start),var(--accent-end));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .sammy-banner{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 8%,var(--bg)),color-mix(in srgb,var(--accent) 10%,var(--bg)));border-bottom:1px solid color-mix(in srgb,var(--accent) 15%,var(--border));padding:.4rem 1.5rem;display:flex;align-items:center;font-size:.75rem}
+        .sammy-banner a{color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:.4rem;font-weight:500;transition:color .2s}
+        .sammy-banner a:hover{color:color-mix(in srgb,var(--accent) 70%,var(--text))}
+        .sammy-name{text-decoration:underline;text-underline-offset:3px}
+        .sammy-x{width:12px;height:12px;fill:var(--accent);flex-shrink:0}
+        .sammy-dot{width:5px;height:5px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;margin-right:6px}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+        header{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+        nav{max-width:1200px;margin:0 auto;padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+        .nav-brand{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--text);font-family:'Fragment Mono',monospace;font-size:1.1rem;font-weight:400}
+        .nav-brand svg{width:28px;height:28px}
+        .nav-links{display:flex;align-items:center;gap:1.5rem}
+        .nav-link{color:var(--text-sec);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.5px;transition:color .2s}
+        .nav-link:hover,.nav-link.active{color:var(--text)}
+        .submit-btn{border:1px solid var(--text-sec);background:transparent;color:var(--text);padding:.35rem .85rem;border-radius:6px;text-decoration:none;font-weight:500;font-size:.8rem;cursor:pointer;transition:all .2s}
+        .submit-btn:hover{background:var(--text);color:var(--bg)}
+        .theme-toggle{background:none;border:1px solid var(--border);color:var(--text-sec);cursor:pointer;padding:.35rem .5rem;border-radius:6px;font-size:.85rem;transition:all .2s}
+        .theme-toggle:hover{border-color:var(--border-hover);color:var(--text)}
+        .hamburger{display:none;background:none;border:none;color:var(--text);cursor:pointer;padding:.5rem}
+        .hamburger svg{width:24px;height:24px}
+        .hero{max-width:1200px;margin:0 auto;padding:4rem 1.5rem 2rem}
+        .hero-label{font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem}
+        .hero h1{font-size:clamp(24px,3.5vw,40px);font-weight:400;line-height:1.2;margin-bottom:1rem}
+        .hero-sub{font-size:15px;color:var(--text-sec);max-width:640px;line-height:1.6}
+        .stats{max-width:1200px;margin:0 auto;padding:1rem 1.5rem 2rem;display:flex;gap:2rem;flex-wrap:wrap}
+        .stat{text-align:center;min-width:120px}
+        .stat-number{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:400;color:var(--text)}
+        .stat-label{font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:.25rem}
+        .ticker-stat .stat-number{font-size:1rem !important}
+        .ticker-stat .stat-number a{text-decoration:none;color:inherit}
+        .ticker-stat .stat-number a:hover{text-decoration:underline}
+        .controls{max-width:1200px;margin:0 auto;padding:0 1.5rem 1.5rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+        .filter-pill{padding:.4rem .85rem;background:transparent;border:1px solid var(--border);border-radius:20px;color:var(--text-sec);font-size:.8rem;cursor:pointer;transition:all .15s;font-family:inherit}
+        .filter-pill:hover{border-color:var(--border-hover);color:var(--text)}
+        .filter-pill.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
+        .search-box{margin-left:auto;padding:.4rem .75rem .4rem 2rem;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.85rem;font-family:inherit;width:220px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%23555' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.156a5 5 0 1 1 0-10 5 5 0 0 1 0 10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:8px center}
+        .search-box:focus{outline:none;border-color:var(--accent)}
+        .table-wrap{max-width:1200px;margin:0 auto;padding:0 1.5rem 3rem;overflow-x:auto}
+        table{width:100%;border-collapse:collapse}
+        thead th{text-align:left;padding:.6rem .75rem;font-size:.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:500;border-bottom:1px solid var(--border);white-space:nowrap}
+        thead th.sortable{cursor:pointer;user-select:none}
+        thead th.sortable:hover{color:var(--text-sec)}
+        tbody tr{border-bottom:1px solid var(--border);transition:background .15s;cursor:pointer}
+        tbody tr:hover{background:var(--bg-card)}
+        td{padding:.65rem .75rem;font-size:.85rem;vertical-align:middle}
+        .td-rank{color:var(--text-muted);font-size:.8rem;font-family:'Fragment Mono',monospace}
+        .td-token{display:flex;align-items:center;gap:.5rem}
+        .td-token img{width:24px;height:24px;border-radius:50%}
+        .td-token-name{font-weight:500}
+        .td-symbol{font-family:'Fragment Mono',monospace;font-size:.8rem;color:var(--accent)}
+        .td-price{font-family:'Fragment Mono',monospace;font-size:.8rem;white-space:nowrap}
+        .td-change{font-family:'Fragment Mono',monospace;font-size:.8rem;white-space:nowrap}
+        .td-change.up{color:var(--green)}
+        .td-change.down{color:var(--red)}
+        .td-cap{font-size:.8rem;color:var(--text-sec);white-space:nowrap}
+        .last-updated{max-width:1200px;margin:0 auto;padding:0 1.5rem 2rem;text-align:center;color:var(--text-muted);font-size:.75rem}
+        .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:200;justify-content:center;align-items:center;padding:1rem}
+        .modal-overlay.active{display:flex}
+        .modal{background:var(--bg);border:1px solid var(--border);border-radius:12px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;padding:2rem}
+        .modal-close{float:right;background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer;padding:0 .5rem}
+        .modal-close:hover{color:var(--text)}
+        .modal-token-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+        .modal-token-head img{width:40px;height:40px;border-radius:50%}
+        .modal-ticker{font-family:'Fragment Mono',monospace;color:var(--accent);font-size:1.2rem}
+        .modal-name{font-size:1.1rem;font-weight:600;margin-bottom:.5rem}
+        .modal-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+        .modal-stat{text-align:center;padding:.75rem;background:var(--bg-card);border:1px solid var(--border);border-radius:8px}
+        .modal-stat-val{font-family:'Fragment Mono',monospace;font-size:1rem;margin-bottom:.25rem}
+        .modal-stat-lbl{font-size:.65rem;color:var(--text-muted);text-transform:uppercase}
+        .modal-link{display:inline-block;margin-top:1rem;color:var(--accent);text-decoration:none;font-size:.85rem}
+        .modal-link:hover{text-decoration:underline}
+        footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center}
+        .footer-text{font-size:.75rem;color:var(--text-muted)}
+        .footer-text a{color:var(--text-sec);text-decoration:none}
+        .footer-text a:hover{color:var(--text)}
+        .built-by{display:inline-block;transition:transform .2s}
+        .built-by:hover{transform:translateY(-2px)}
+        .loading-msg{text-align:center;padding:3rem;color:var(--text-muted);font-size:.85rem}
+        @keyframes pulsedot{0%,100%{opacity:.4}50%{opacity:1}}
+        .loading-dot{animation:pulsedot 1.5s infinite}
+        @media(max-width:768px){
+            .hamburger{display:block}
+            .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:1rem 1.5rem;flex-direction:column;align-items:flex-start;gap:1rem}
+            .nav-links.open{display:flex}
+            .hero{padding:2.5rem 1.5rem 1.5rem}
+            .stats{gap:1.5rem}
+            .controls{gap:.5rem}
+            .search-box{width:100%;margin-left:0;order:10}
+            .filter-pill{font-size:.75rem;padding:.35rem .65rem}
+            .hide-mobile{display:none}
+            td{padding:.5rem .4rem;font-size:.8rem}
+            .modal{padding:1.5rem;margin:.5rem}
+            .modal-stats{grid-template-columns:repeat(2,1fr)}
+            .sammy-banner{padding:.35rem 1rem;font-size:.7rem}
+        }
+    </style>
+    <script>(function(){var t=localStorage.getItem('openclaw-index-theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
+</head>
+<body>
+    <div class="sammy-banner">
+        <span class="sammy-dot"></span>
+        <a href="https://x.com/0xSammy" target="_blank" rel="noopener">
+            Built by <span class="sammy-name">0xSammy</span>
+            <svg class="sammy-x" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+    </div>
+    <header>
+        <nav>
+            <a href="index.html" class="nav-brand">
+                <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4444"/><stop offset="100%" stop-color="#ff8c00"/></linearGradient></defs>
+                    <rect width="32" height="32" rx="6" fill="#111"/>
+                    <path d="M8 24C8 15 11.5 7 16 7C20.5 7 24 15 24 24" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M11.5 22C11.5 16 13.5 10 16 10C18.5 10 20.5 16 20.5 22" stroke="url(#lg)" stroke-width="1.8" stroke-linecap="round"/>
+                    <circle cx="16" cy="24" r="2" fill="url(#lg)"/>
+                    <line x1="16" y1="7" x2="16" y2="4" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round"/>
+                    <line x1="10" y1="9" x2="8" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
+                    <line x1="22" y1="9" x2="24" y2="7" stroke="url(#lg)" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+                OpenClaw Index
+            </a>
+            <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="tokens.html" class="nav-link active">TOKENS</a>
+                <a href="about.html" class="nav-link">ABOUT</a>
+                <a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="submit-btn">Submit Listing</a>
+                <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">&#9728;</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <div class="hero-label">OpenClaw Tokens</div>
+        <h1>OpenClaw <span class="accent">Token Index.</span></h1>
+        <p class="hero-sub">Live market data for public tokens in the OpenClaw and Moltbook ecosystem. Prices update every 60 seconds via CoinGecko.</p>
+    </div>
+    <div class="stats">
+        <div class="stat"><div class="stat-number" id="stat-mcap">--</div><div class="stat-label">Total Market Cap</div></div>
+        <div class="stat ticker-stat"><div class="stat-number" id="stat-top-gain">--</div><div class="stat-label">Top Gainer</div></div>
+        <div class="stat ticker-stat"><div class="stat-number" id="stat-top-loss">--</div><div class="stat-label">Top Loser</div></div>
+    </div>
+    <div class="controls">
+        <button class="filter-pill active" data-filter="all" onclick="setFilter('all')">All</button>
+        <button class="filter-pill" data-filter="large" onclick="setFilter('large')">Large Cap</button>
+        <button class="filter-pill" data-filter="mid" onclick="setFilter('mid')">Mid Cap</button>
+        <button class="filter-pill" data-filter="micro" onclick="setFilter('micro')">Micro Cap</button>
+        <input type="text" class="search-box" placeholder="Search token or symbol..." id="search-input" oninput="renderTable()">
+    </div>
+    <div class="table-wrap">
+        <table id="token-table">
+            <thead>
+                <tr>
+                    <th class="sortable" onclick="sortBy('rank')">#</th>
+                    <th class="sortable" onclick="sortBy('name')">Token</th>
+                    <th class="sortable" onclick="sortBy('symbol')">Symbol</th>
+                    <th class="sortable" onclick="sortBy('price')">Price (USD)</th>
+                    <th class="sortable" onclick="sortBy('change24h')">24h</th>
+                    <th class="sortable hide-mobile" onclick="sortBy('change7d')">7d</th>
+                    <th class="sortable" onclick="sortBy('mcap')">Market Cap</th>
+                    <th class="sortable hide-mobile" onclick="sortBy('vol')">Volume</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <tr><td colspan="8" class="loading-msg"><span class="loading-dot">Loading tokens...</span></td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="last-updated" id="last-updated"></div>
+
+    <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
+        <div class="modal" id="modal"></div>
+    </div>
+
+    <footer>
+        <p class="footer-text">&copy; 2026 OpenClaw Index. All rights reserved.</p>
+        <p class="footer-text" style="margin-top:.5rem"><a href="https://x.com/0xSammy" target="_blank" rel="noopener" class="built-by">Built by 0xSammy</a></p>
+    </footer>
+
+    <script>
+    function toggleTheme(){var t=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';document.documentElement.setAttribute('data-theme',t);localStorage.setItem('openclaw-index-theme',t);document.getElementById('theme-btn').innerHTML=t==='light'?'&#9790;':'&#9728;'}
+    (function(){if(localStorage.getItem('openclaw-index-theme')==='light')document.getElementById('theme-btn').innerHTML='&#9790;'})();
+
+    var allTokens=[];
+    var currentFilter='all';
+    var sortCol='mcap';
+    var sortAsc=false;
+
+    var API_URL='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=moltbook-and-openclaw-themed&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h,7d';
+    var PROXIES=[function(u){return u},function(u){return'https://corsproxy.io/?'+encodeURIComponent(u)},function(u){return'https://api.allorigins.win/raw?url='+encodeURIComponent(u)}];
+
+    async function fetchWithFallback(){
+        for(var i=0;i<PROXIES.length;i++){
+            try{
+                var ctrl=new AbortController();var tid=setTimeout(function(){ctrl.abort()},8000);
+                var r=await fetch(PROXIES[i](API_URL),{signal:ctrl.signal});clearTimeout(tid);
+                if(r.ok){var d=await r.json();return d}
+            }catch(e){}
+        }
+        return null;
+    }
+
+    function fmtUsd(n){
+        if(n==null)return'--';
+        if(n>=1e9)return'$'+(n/1e9).toFixed(2)+'B';
+        if(n>=1e6)return'$'+(n/1e6).toFixed(2)+'M';
+        if(n>=1e3)return'$'+(n/1e3).toFixed(2)+'K';
+        if(n>=1)return'$'+n.toFixed(2);
+        if(n>=0.01)return'$'+n.toFixed(4);
+        return'$'+n.toFixed(8);
+    }
+
+    function fmtChange(v){if(v==null)return'--';var s=v>=0?'+':'';return s+v.toFixed(2)+'%'}
+    function capTier(mcap){if(!mcap)return'micro';if(mcap>10000000)return'large';if(mcap>1000000)return'mid';return'micro'}
+
+    function updateStats(){
+        var total=0;var topG=null,topL=null;
+        allTokens.forEach(function(t){
+            total+=(t.market_cap||0);
+            var c=t.price_change_percentage_24h;
+            if(c!=null){if(!topG||c>topG.price_change_percentage_24h)topG=t;if(!topL||c<topL.price_change_percentage_24h)topL=t}
+        });
+        document.getElementById('stat-mcap').textContent=fmtUsd(total);
+        if(topG){var gc=topG.price_change_percentage_24h;document.getElementById('stat-top-gain').innerHTML='<a href="https://www.coingecko.com/en/coins/'+topG.id+'" target="_blank" rel="noopener"><span style="color:var(--text)">'+topG.symbol.toUpperCase()+'</span> <span style="color:var(--green)">'+fmtChange(gc)+'</span></a>'}
+        if(topL){var lc=topL.price_change_percentage_24h;document.getElementById('stat-top-loss').innerHTML='<a href="https://www.coingecko.com/en/coins/'+topL.id+'" target="_blank" rel="noopener"><span style="color:var(--text)">'+topL.symbol.toUpperCase()+'</span> <span style="color:var(--red)">'+fmtChange(lc)+'</span></a>'}
+    }
+
+    function getFiltered(){
+        var q=(document.getElementById('search-input').value||'').toLowerCase();
+        return allTokens.filter(function(t){
+            if(currentFilter==='large'&&capTier(t.market_cap)!=='large')return false;
+            if(currentFilter==='mid'&&capTier(t.market_cap)!=='mid')return false;
+            if(currentFilter==='micro'&&capTier(t.market_cap)!=='micro')return false;
+            if(q&&t.name.toLowerCase().indexOf(q)===-1&&t.symbol.toLowerCase().indexOf(q)===-1)return false;
+            return true;
+        });
+    }
+
+    function sortTokens(arr){
+        var col=sortCol,asc=sortAsc;
+        arr.sort(function(a,b){
+            var va,vb;
+            if(col==='rank'){va=a.market_cap_rank||9999;vb=b.market_cap_rank||9999}
+            else if(col==='name'){va=a.name.toLowerCase();vb=b.name.toLowerCase()}
+            else if(col==='symbol'){va=a.symbol;vb=b.symbol}
+            else if(col==='price'){va=a.current_price||0;vb=b.current_price||0}
+            else if(col==='change24h'){va=a.price_change_percentage_24h||0;vb=b.price_change_percentage_24h||0}
+            else if(col==='change7d'){va=a.price_change_percentage_7d_in_currency||0;vb=b.price_change_percentage_7d_in_currency||0}
+            else if(col==='mcap'){va=a.market_cap||0;vb=b.market_cap||0}
+            else if(col==='vol'){va=a.total_volume||0;vb=b.total_volume||0}
+            else{va=0;vb=0}
+            if(typeof va==='string')return asc?va.localeCompare(vb):vb.localeCompare(va);
+            return asc?va-vb:vb-va;
+        });
+        return arr;
+    }
+
+    function renderTable(){
+        var filtered=sortTokens(getFiltered());
+        var tbody=document.getElementById('table-body');
+        if(filtered.length===0){tbody.innerHTML='<tr><td colspan="8" class="loading-msg">No tokens found.</td></tr>';return}
+        var html='';
+        filtered.forEach(function(t,i){
+            var c24=t.price_change_percentage_24h;
+            var c7d=t.price_change_percentage_7d_in_currency;
+            var c24cls=c24>=0?'up':'down';
+            var c7dcls=c7d>=0?'up':'down';
+            html+='<tr onclick="showModal(\''+t.id+'\')">';
+            html+='<td class="td-rank">'+(i+1)+'</td>';
+            html+='<td><div class="td-token">'+(t.image?'<img src="'+t.image+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'')+'<span class="td-token-name">'+t.name+'</span></div></td>';
+            html+='<td class="td-symbol">'+t.symbol.toUpperCase()+'</td>';
+            html+='<td class="td-price">'+fmtUsd(t.current_price)+'</td>';
+            html+='<td class="td-change '+(c24!=null?c24cls:'')+'">'+fmtChange(c24)+'</td>';
+            html+='<td class="td-change hide-mobile '+(c7d!=null?c7dcls:'')+'">'+fmtChange(c7d)+'</td>';
+            html+='<td class="td-cap">'+fmtUsd(t.market_cap)+'</td>';
+            html+='<td class="td-cap hide-mobile">'+fmtUsd(t.total_volume)+'</td>';
+            html+='</tr>';
+        });
+        tbody.innerHTML=html;
+        document.getElementById('last-updated').textContent='Last updated: '+new Date().toLocaleTimeString()+' - Auto-refreshes every 60s';
+    }
+
+    function setFilter(f){currentFilter=f;document.querySelectorAll('.filter-pill').forEach(function(p){p.classList.toggle('active',p.dataset.filter===f)});renderTable()}
+    function sortBy(col){if(sortCol===col)sortAsc=!sortAsc;else{sortCol=col;sortAsc=col==='name'||col==='symbol'}renderTable()}
+
+    function showModal(id){
+        var t=allTokens.find(function(x){return x.id===id});if(!t)return;
+        var c24=t.price_change_percentage_24h;var c7d=t.price_change_percentage_7d_in_currency;
+        var m=document.getElementById('modal');
+        m.innerHTML='<button class="modal-close" onclick="closeModal()">&times;</button>'+
+            '<div class="modal-token-head">'+(t.image?'<img src="'+t.image+'" alt="">':'')+'<div><div class="modal-ticker">'+t.symbol.toUpperCase()+'</div><div class="modal-name">'+t.name+'</div></div></div>'+
+            '<div class="modal-stats">'+
+            '<div class="modal-stat"><div class="modal-stat-val">'+fmtUsd(t.current_price)+'</div><div class="modal-stat-lbl">Price</div></div>'+
+            '<div class="modal-stat"><div class="modal-stat-val td-change '+(c24>=0?'up':'down')+'">'+fmtChange(c24)+'</div><div class="modal-stat-lbl">24h Change</div></div>'+
+            '<div class="modal-stat"><div class="modal-stat-val td-change '+(c7d>=0?'up':'down')+'">'+fmtChange(c7d)+'</div><div class="modal-stat-lbl">7d Change</div></div>'+
+            '<div class="modal-stat"><div class="modal-stat-val">'+fmtUsd(t.market_cap)+'</div><div class="modal-stat-lbl">Market Cap</div></div>'+
+            '<div class="modal-stat"><div class="modal-stat-val">'+fmtUsd(t.fully_diluted_valuation)+'</div><div class="modal-stat-lbl">FDV</div></div>'+
+            '<div class="modal-stat"><div class="modal-stat-val">'+fmtUsd(t.total_volume)+'</div><div class="modal-stat-lbl">24h Volume</div></div>'+
+            '</div>'+
+            '<div style="margin-bottom:.5rem"><span style="font-size:.8rem;color:var(--text-muted)">ATH:</span> <span style="font-family:Fragment Mono,monospace;font-size:.85rem">'+fmtUsd(t.ath)+'</span></div>'+
+            '<div style="margin-bottom:1rem"><span style="font-size:.8rem;color:var(--text-muted)">ATL:</span> <span style="font-family:Fragment Mono,monospace;font-size:.85rem">'+fmtUsd(t.atl)+'</span></div>'+
+            '<a class="modal-link" href="https://www.coingecko.com/en/coins/'+t.id+'" target="_blank" rel="noopener">View on CoinGecko &rarr;</a>';
+        document.getElementById('modal-overlay').classList.add('active');
+    }
+    function closeModal(){document.getElementById('modal-overlay').classList.remove('active')}
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
+
+    async function loadData(){
+        var data=await fetchWithFallback();
+        if(!data){document.getElementById('table-body').innerHTML='<tr><td colspan="8" class="loading-msg">Failed to load data. Retrying...</td></tr>';setTimeout(loadData,5000);return}
+        allTokens=data.slice(0,10);
+        updateStats();
+        renderTable();
+    }
+    loadData();
+    setInterval(loadData,60000);
+    </script>
+</body>
+</html>
