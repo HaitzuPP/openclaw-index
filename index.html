@@ -97,7 +97,7 @@
         .td-token img{width:24px;height:24px;border-radius:50%}
         .td-token-name{font-weight:500;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--border-hover)}
         .td-token-name:hover{text-decoration-color:var(--text)}
-        .td-desc{font-size:.75rem;color:var(--text-muted);margin-top:.2rem;max-width:320px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .td-desc{font-size:.75rem;color:var(--text-muted);max-width:250px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
         .td-symbol{font-family:'Fragment Mono',monospace;font-size:.8rem;color:var(--accent)}
         .td-price{font-family:'Fragment Mono',monospace;font-size:.8rem;white-space:nowrap}
         .td-change{font-family:'Fragment Mono',monospace;font-size:.8rem;white-space:nowrap}
@@ -204,6 +204,7 @@
                 <tr>
                     <th class="sortable" onclick="sortBy('rank')">#</th>
                     <th class="sortable" onclick="sortBy('name')">Token</th>
+                    <th class="hide-mobile">Description</th>
                     <th class="sortable" onclick="sortBy('change24h')">24h</th>
                     <th class="sortable hide-mobile" onclick="sortBy('change7d')">7d</th>
                     <th class="sortable" onclick="sortBy('mcap')">Market Cap</th>
@@ -321,7 +322,7 @@
     function renderTable(){
         var filtered=sortTokens(getFiltered());
         var tbody=document.getElementById('table-body');
-        if(filtered.length===0){tbody.innerHTML='<tr><td colspan="7" class="loading-msg">No tokens found.</td></tr>';return}
+        if(filtered.length===0){tbody.innerHTML='<tr><td colspan="8" class="loading-msg">No tokens found.</td></tr>';return}
         var html='';
         filtered.forEach(function(t,i){
             var c24=t.price_change_percentage_24h;
@@ -331,7 +332,8 @@
             html+='<tr onclick="showModal(\''+t.id+'\')">';
             html+='<td class="td-rank">'+(i+1)+'</td>';
             var memo=MEMO_DATA[t.id];var desc=memo&&memo.points&&memo.points[0]?memo.points[0].replace(/<[^>]+>/g,''):'';
-            html+='<td><div class="td-token">'+(t.image?'<img src="'+t.image+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'')+'<div><span class="td-token-name">'+t.name+'</span> <span class="td-symbol">'+t.symbol.toUpperCase()+'</span>'+(desc?'<div class="td-desc">'+desc+'</div>':'')+'</div></div></td>';
+            html+='<td><div class="td-token">'+(t.image?'<img src="'+t.image+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'')+'<div><span class="td-token-name">'+t.name+'</span> <span class="td-symbol">'+t.symbol.toUpperCase()+'</span></div></div></td>';
+            html+='<td class="td-desc hide-mobile">'+desc+'</td>';
             html+='<td class="td-change '+(c24!=null?c24cls:'')+'">'+fmtChange(c24)+'</td>';
             html+='<td class="td-change hide-mobile '+(c7d!=null?c7dcls:'')+'">'+fmtChange(c7d)+'</td>';
             html+='<td class="td-cap">'+fmtUsd(t.market_cap)+'</td>';
@@ -529,7 +531,7 @@
 
     async function loadData(){
         var data=await fetchWithFallback();
-        if(!data){document.getElementById('table-body').innerHTML='<tr><td colspan="7" class="loading-msg">Failed to load data. Retrying...</td></tr>';setTimeout(loadData,5000);return}
+        if(!data){document.getElementById('table-body').innerHTML='<tr><td colspan="8" class="loading-msg">Failed to load data. Retrying...</td></tr>';setTimeout(loadData,5000);return}
         allTokens=data.filter(function(t){return (t.fully_diluted_valuation||0)>=250000});
         updateStats();
         renderTable();
