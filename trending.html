@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending - ClawPrice</title>
+    <meta name="description" content="Material announcements and events that moved OpenClaw token prices. Tracked by Khala Research.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#0b0a0b;--bg-card:#111;--border:#1a1a1a;--border-hover:#333;--text:#fff;--text-sec:#888;--text-muted:#555;--accent:#ff6b35;--accent-start:#ff4444;--accent-end:#ff8c00;--accent-dim:color-mix(in srgb,#ff6b35 15%,var(--bg));--green:#22c55e;--red:#ef4444}
+        [data-theme="light"]{--bg:#fafafa;--bg-card:#fff;--border:#e0e0e0;--border-hover:#ccc;--text:#111;--text-sec:#555;--text-muted:#999;--accent:#e55a2b;--accent-start:#dd3333;--accent-end:#e07000;--accent-dim:color-mix(in srgb,#e55a2b 12%,#fff);--green:#16a34a;--red:#dc2626}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;transition:background .3s,color .3s}
+        h1,h2,h3{font-family:'Fragment Mono',monospace}
+        header{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+        nav{max-width:1200px;margin:0 auto;padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+        .nav-brand{text-decoration:none;color:var(--text);font-family:'Fragment Mono',monospace;font-size:1.1rem;font-weight:400;letter-spacing:1px;text-transform:uppercase}
+        .nav-right{display:flex;align-items:center;gap:1.5rem}
+        .nav-link{color:var(--text-sec);text-decoration:none;font-family:'Fragment Mono',monospace;font-size:.75rem;text-transform:uppercase;letter-spacing:2px;transition:color .2s}
+        .nav-link:hover{color:var(--text)}
+        .nav-link.active{color:var(--text);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px}
+        .theme-toggle{background:none;border:1px solid var(--border);color:var(--text-sec);width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+        .theme-toggle:hover{border-color:var(--text-sec);color:var(--text)}
+        .page-header{max-width:1200px;margin:0 auto;padding:2.5rem 1.5rem 1.5rem}
+        .page-header h1{font-size:clamp(24px,3.5vw,40px);font-weight:400}
+        .page-header p{color:var(--text-sec);font-size:15px;max-width:640px;margin-top:.5rem}
+        .filter-bar{max-width:1200px;margin:0 auto;padding:0 1.5rem 1.5rem;display:flex;gap:.5rem;flex-wrap:wrap}
+        .filter-pill{padding:.35rem .75rem;background:transparent;border:1px solid var(--border);border-radius:20px;color:var(--text-sec);font-size:.75rem;cursor:pointer;transition:all .15s;font-family:inherit}
+        .filter-pill:hover{border-color:var(--border-hover);color:var(--text)}
+        .filter-pill.active{background:var(--accent-dim);border-color:var(--accent);color:var(--accent)}
+        .events{max-width:1200px;margin:0 auto;padding:0 1.5rem 3rem;display:flex;flex-direction:column;gap:1rem}
+        .event{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;transition:border-color .2s;cursor:pointer}
+        .event:hover{border-color:var(--border-hover)}
+        .event-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.35rem}
+        .event-date{font-size:.75rem;color:var(--text-muted);font-family:'Fragment Mono',monospace}
+        .event-impact{font-size:.75rem;font-family:'Fragment Mono',monospace;padding:.2rem .5rem;border-radius:4px}
+        .event-impact{display:none}
+        .event-author{font-size:.75rem;color:var(--text-muted);margin-bottom:.25rem}
+        .event-author a{color:var(--accent);text-decoration:none}
+        .event-author a:hover{text-decoration:underline}
+        .event-ticker{font-size:.85rem;color:var(--accent);font-weight:600;margin-bottom:.25rem}
+        .event-title{font-size:.95rem;font-weight:600;margin-bottom:.35rem}
+        .event-desc{font-size:.8rem;color:var(--text-sec);line-height:1.6}
+        .event-summary{display:none;margin-top:.75rem;padding:.75rem 1rem;background:var(--bg);border:1px solid var(--border);border-radius:8px}
+        .event-summary ul{list-style:disc;padding-left:1.2rem;display:flex;flex-direction:column;gap:.4rem}
+        .event-summary li{font-size:.8rem;color:var(--text-sec);line-height:1.5}
+        .event.expanded .event-summary{display:block}
+        .event.expanded .event-desc{display:none}
+        .event-source{display:inline-block;margin-top:.6rem;font-size:.75rem;color:var(--accent);text-decoration:none}
+        .event-source:hover{text-decoration:underline}
+        footer{max-width:1200px;margin:0 auto;padding:2rem 1.5rem;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:.75rem}
+        footer a{color:var(--text-muted);text-decoration:none}
+        footer a:hover{color:var(--text)}
+        @media(max-width:640px){
+            .page-header{padding:1.5rem 1rem 1rem}
+            .filter-bar,.events{padding-left:1rem;padding-right:1rem}
+            nav{padding:.75rem 1rem}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="nav-brand">CLAWPRICE</a>
+            <div class="nav-right">
+                <a href="index.html" class="nav-link">TRACKER</a>
+                <a href="trending.html" class="nav-link active">TRENDING</a>
+                <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">&#9728;</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>Trending</h1>
+        <p>Material announcements that moved OpenClaw token prices.</p>
+    </div>
+
+    <div class="filter-bar"></div>
+
+    <div class="events" id="events"></div>
+
+    <footer>
+        <span>ClawPrice</span> <span style="margin:0 .5rem">/</span>
+        <span>Tracked by <a href="https://x.com/khalaResearch" target="_blank" rel="noopener">Khala Research</a></span> <span style="margin:0 .5rem">/</span>
+        <span>Powered by CoinGecko API</span>
+    </footer>
+
+    <script>
+    function toggleTheme(){
+        var t=document.documentElement.getAttribute('data-theme')==='light'?'dark':'light';
+        document.documentElement.setAttribute('data-theme',t);
+        document.getElementById('theme-btn').textContent=t==='light'?'\u263E':'\u2600';
+        localStorage.setItem('clawprice-theme',t);
+    }
+    (function(){var t=localStorage.getItem('clawprice-theme');if(t==='light'){document.documentElement.setAttribute('data-theme','light');var b=document.getElementById('theme-btn');if(b)b.textContent='\u263E';}})();
+
+    var EVENTS=[
+        {
+            date:'Feb 14, 2026 4:37 PM ET',
+            ticker:'FELIX',
+            author:'nateliason',
+            authorUrl:'https://x.com/nateliason',
+            title:'FelixCraft Week 2 revenue report: $62K total since launch, plus ~$50K in FELIX tokens',
+            desc:'Nat Eliason shares FelixCraft\'s Week 2 revenue update. $5,438 earned through Masinov work plus 8.9 ETH (~$18,271) in FELIX trading fees. Total revenue since 2/2 launch: $62,013, not counting ~$50K in FELIX token holdings.',
+            impactDir:'up',
+            bullets:[
+                '$62,013 total revenue since launch on Feb 2 - $5.4K from Masinov book sales + 8.9 ETH ($18.3K) in Week 2 trading fees',
+                'Additional ~$50K in FELIX token holdings not counted in revenue figure - total economic value exceeds $112K',
+                'Consistent revenue generation across two weeks validates the autonomous AI agent creator model on Base'
+            ],
+            source:'https://x.com/nateliason/status/2022424979099484547'
+        },
+        {
+            date:'Feb 14, 2026',
+            ticker:'ANTIHUNTER',
+            author:'0xSammy',
+            authorUrl:'https://x.com/0xSammy',
+            title:'AntiHunter treasury update: $358K FMV across 6 positions on Base',
+            desc:'Geoffrey Woo\'s @Antifund published a full treasury breakdown for the AntiHunter agent. $257K in ANTIHUNTER, $70K WETH, $14K sBNKR, $10K BIO, $6K FELIX, $2K ETH. On-chain venture desk model gaining traction.',
+            impactDir:'up',
+            bullets:[
+                'Treasury holds $358K FMV across 6 positions on Base - largest allocation is native ANTIHUNTER token at $257K',
+                'Diversified into WETH ($70K), sBNKR ($14K), BIO ($10K), FELIX ($6K) showing active portfolio management',
+                'On-chain venture desk model validates the autonomous treasury agent use case for OpenClaw ecosystem'
+            ],
+            source:'https://x.com/Antifund'
+        },
+        {
+            date:'Feb 13, 2026',
+            ticker:'KELLYCLAUDE',
+            author:'kellyclaudeai',
+            authorUrl:'https://x.com/kellyclaudeai',
+            title:'KellyClaude daily metrics: $2K revenue, 1 app approved in App Store, 3 submitted',
+            desc:'Austen Allred\'s AI agent app factory reports daily metrics. $2,000 in revenue, 1 app approved to the App Store, 3 submitted or resubmitted, 2 BuildMyIdea apps built, 2 marketing agents/workflows built. Latest build: ParkMark parking spot saver.',
+            impactDir:'up',
+            bullets:[
+                'Revenue-generating AI agent: $2K daily revenue from autonomous app development and deployment',
+                'First AI agent with approved App Store applications - ParkMark parking spot saver is the latest',
+                'Built by Austen Allred (@austen) via Clanker on Base - proving the agent app factory model'
+            ],
+            source:'https://x.com/kellyclaudeai'
+        },
+        {
+            date:'Feb 6, 2026 11:22 AM ET',
+            ticker:'CLAWNCH',
+            author:'frankdegods',
+            authorUrl:'https://x.com/frankdegods',
+            title:'Frank (DeGods) makes public bet on Clawnch: "ahead of the curve" bridging web2 AI and crypto',
+            desc:'Frank highlights Clawnch as first movers on Claude Code wave, first movers on ClawdBot integration, with fees accruing in tokens and ETH. Now building rails for on-chain fees to pay for API. Notes 8-figure daily runners and a 9-figure runner while sitting below 9-figure mcap.',
+            impactDir:'up',
+            bullets:[
+                'First movers on Claude Code wave and ClawdBot integration - building deeper agentic workflow rails',
+                'Fee model aligned with devs: fees accrue in tokens and ETH, now adding on-chain fee-to-API payment rails',
+                'Already producing 8-figure daily runners and a 9-figure runner - Frank sees this as his bet on web2 AI/crypto convergence'
+            ],
+            source:'https://x.com/frankdegods/status/2019808902699688310'
+        },
+        {
+            date:'Feb 8, 2026 8:39 AM ET',
+            ticker:'OPENCLAW ECOSYSTEM',
+            author:'0xSammy',
+            authorUrl:'https://x.com/0xSammy',
+            title:'Daily agentic roundups return: WSJ covers OpenClaw, Aave and T54 roll out agentic credit lines',
+            desc:'0xSammy announces a resurgence of daily agentic ecosystem roundups. The Wall Street Journal published an article on OpenClaw. Aave rolls out support for agentic credit lines as AI borrows funds. T54 rolls out agentic credit lines on Solana.',
+            impactDir:'up',
+            bullets:[
+                'Wall Street Journal published an article on OpenClaw - mainstream media coverage signals growing institutional awareness',
+                'Aave rolls out agentic credit lines enabling AI agents to borrow funds autonomously on-chain',
+                'T54 launches agentic credit lines on Solana - multi-chain expansion of agent-native financial infrastructure'
+            ],
+            source:'https://x.com/0xSammy/status/2020492733803081884'
+        },
+        {
+            date:'Feb 2026',
+            ticker:'ANTIHUNTER',
+            author:'Antifund',
+            authorUrl:'https://x.com/Antifund',
+            title:'AntiHunter launches receipts-first staking with multi-term locks and streaming rewards',
+            desc:'AntiHunter introduces a novel staking mechanism with 30/60/90/120-day lock periods, bonus weight multipliers, linear streaming rewards, early-exit penalties, and rollover support. All operations verifiable on-chain.',
+            impactDir:'up',
+            bullets:[
+                'Multi-term staking locks (30/60/90/120 days) with weight multipliers rewarding longer commitments',
+                'Linear streaming rewards with early-exit penalties - aligns holder incentives with long-term value',
+                'Receipts-first approach: all staking operations are verifiable on-chain via Base blockchain'
+            ],
+            source:'https://x.com/antihunter59823'
+        },
+        {
+            date:'Feb 2026',
+            ticker:'X402GUARD',
+            author:'goheesheng',
+            authorUrl:'https://x.com/goheesheng',
+            title:'x402guard launches pre-install security auditor for AI agent skills',
+            desc:'New security tool for the OpenClaw ecosystem. x402guard scans agent skills for malware, credential theft, and risky permissions before installation, returning a risk score from 0-100. Trading on Virtuals protocol.',
+            impactDir:'up',
+            bullets:[
+                'Pre-install scanner checks skills for malware, credential theft, and risky permissions before agents install them',
+                'Returns a 0-100 risk score - first dedicated security layer for the OpenClaw skill ecosystem',
+                'Built by @goheesheng, trading on Virtuals protocol at app.virtuals.io'
+            ],
+            source:'https://x.com/x402guard'
+        }
+    ];
+
+    function renderEvents(filter){
+        var el=document.getElementById('events');
+        var filtered=filter==='all'?EVENTS:EVENTS.filter(function(e){return e.impactDir===filter});
+        if(!filtered.length){el.innerHTML='<div style="text-align:center;color:var(--text-muted);padding:3rem">No events match this filter.</div>';return}
+        el.innerHTML=filtered.map(function(e){
+            return '<div class="event" onclick="toggleEvent(this)">'+
+                '<div class="event-top">'+
+                    '<span class="event-date">'+e.date+'</span>'+
+                    ''+
+                '</div>'+
+                (e.author?'<div class="event-author"><a href="'+e.authorUrl+'" target="_blank" rel="noopener">@'+e.author+'</a></div>':'')+
+                '<div class="event-ticker">'+e.ticker+'</div>'+
+                '<div class="event-title">'+e.title+'</div>'+
+                '<div class="event-desc">'+e.desc+'</div>'+
+                '<div class="event-summary"><ul>'+e.bullets.map(function(b){return'<li>'+b+'</li>'}).join('')+'</ul>'+
+                (e.source?'<a href="'+e.source+'" target="_blank" rel="noopener" class="event-source">Source &rarr;</a>':'')+
+                '</div>'+
+            '</div>';
+        }).join('');
+    }
+
+    function toggleEvent(el){el.classList.toggle('expanded')}
+
+    function filterEvents(cat,btn){
+        document.querySelectorAll('.filter-pill').forEach(function(p){p.classList.remove('active')});
+        btn.classList.add('active');
+        renderEvents(cat);
+    }
+
+    renderEvents('all');
+    </script>
+</body>
+</html>
