@@ -378,7 +378,7 @@
     function updateSortHeaders(){document.querySelectorAll('thead th.sortable').forEach(function(th){var col=th.getAttribute('onclick').match(/sortBy\('([^']+)'\)/);if(!col)return;col=col[1];var base=th.textContent.replace(/\s*[▲▼]/,'');th.textContent=col===sortCol?base+' '+(sortAsc?'▲':'▼'):base})}
 
     var NEWLY_ADDED=[
-        {id:'antihunter',date:'Feb 14, 2026',note:'On-chain venture desk and autonomous treasury manager on Base'}
+        {id:'antihunter',date:'Feb 14, 2026',note:'On-chain venture desk and autonomous treasury manager built on Base. Operates as an OpenClaw agent that manages live positions, executes buy-and-burn operations, and publishes verifiable on-chain receipts. Built by Geoffrey Woo\'s @Antifund, backed by Logan Paul.'}
     ];
 
     var MEMO_DATA={
