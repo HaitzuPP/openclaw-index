@@ -3,13 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClawPrice</title>
-    <meta name="description" content="Live prices and market data for OpenClaw and Moltbook ecosystem tokens. Updated every 60 seconds.">
-    <meta property="og:title" content="ClawPrice | Token Tracker">
-    <meta property="og:description" content="Live token price tracker for the OpenClaw and Moltbook ecosystem.">
+    <title>ClawPrice | Live OpenClaw & Moltbook Token Prices</title>
+    <meta name="description" content="Live prices, market caps, and volume for OpenClaw and Moltbook ecosystem tokens. Auto-refreshes every 60 seconds. Track CLAWD, Moltbook, Clawnch, and more.">
+    <meta name="keywords" content="ClawPrice, OpenClaw, Moltbook, token tracker, crypto prices, CLAWD, Clawnch, KellyClaude, Anti Hunter, FELIX, Base chain, AI agents, DeFi">
+    <meta property="og:title" content="ClawPrice | Live OpenClaw & Moltbook Token Prices">
+    <meta property="og:description" content="Live prices, market caps, and volume for OpenClaw and Moltbook ecosystem tokens. Auto-refreshes every 60 seconds.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clawprice.io/">
+    <meta property="og:site_name" content="ClawPrice">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="ClawPrice | Live OpenClaw & Moltbook Token Prices">
+    <meta name="twitter:description" content="Live prices, market caps, and volume for OpenClaw and Moltbook ecosystem tokens. Auto-refreshes every 60 seconds.">
+    <meta name="twitter:site" content="@khalaResearch">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="canonical" href="https://clawprice.io/">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "name": "ClawPrice",
+          "url": "https://clawprice.io/",
+          "description": "Live token price tracker for the OpenClaw and Moltbook ecosystem.",
+          "publisher": { "@id": "https://clawprice.io/#organization" }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://clawprice.io/#organization",
+          "name": "Khala Research",
+          "url": "https://khala.io",
+          "sameAs": ["https://x.com/khalaResearch"]
+        }
+      ]
+    }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root{--bg:#0b0a0b;--bg-card:#111;--border:#1a1a1a;--border-hover:#333;--text:#fff;--text-sec:#888;--text-muted:#555;--accent:#ff6b35;--accent-start:#ff4444;--accent-end:#ff8c00;--accent-dim:color-mix(in srgb,#ff6b35 15%,var(--bg));--green:#22c55e;--red:#ef4444;--red-dim:color-mix(in srgb,#ef4444 15%,var(--bg))}
@@ -160,7 +188,7 @@
         <div class="stat-box" id="stat-top-gain"><span class="stat-box-label">Top Mover (24h)</span><span class="stat-box-val">--</span></div>
         <div class="stat-box" id="stat-top-loss"><span class="stat-box-label">Biggest Drop (24h)</span><span class="stat-box-val">--</span></div>
     </div>
-    <div id="newly-added" style="background:color-mix(in srgb,var(--accent) 5%,var(--bg));border:1px solid color-mix(in srgb,var(--accent) 15%,var(--border));border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:none;max-width:700px;margin-left:auto;margin-right:auto">
+    <div id="newly-added" style="background:color-mix(in srgb,var(--accent) 5%,var(--bg));border:1px solid color-mix(in srgb,var(--accent) 15%,var(--border));border-radius:10px;padding:1rem 1.25rem;margin:0 auto 1.5rem;display:none;max-width:700px;padding-left:1.5rem;padding-right:1.5rem">
         <div style="font-size:.7rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem">Newly Added</div>
         <div id="newly-added-list" style="display:flex;flex-direction:column;gap:.35rem;font-size:.85rem;color:var(--text-sec)"></div>
     </div>
@@ -191,9 +219,9 @@
         <div class="modal" id="modal"></div>
     </div>
 
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;background:#111;border-radius:12px;padding:2rem 2.5rem;margin:2rem 1.5rem">
-        <div><div style="font-family:Inter,sans-serif;font-size:clamp(16px,2.5vw,20px);font-weight:600;color:#fff;line-height:1.3">Never miss an update on the OpenClaw ecosystem.</div><div style="font-family:Inter,sans-serif;font-size:clamp(12px,1.5vw,14px);font-weight:400;color:#999;margin-top:.35rem">Subscribe to <a href="https://s4mmyeth.substack.com/" target="_blank" rel="noopener" style="color:#999;text-decoration:underline;text-underline-offset:2px">0xSammy's newsletter</a></div></div>
-        <a href="https://s4mmyeth.substack.com/" target="_blank" rel="noopener" style="display:inline-block;background:#fff;color:#000;border:none;border-radius:30px;padding:.65rem 1.5rem;font-size:.85rem;font-weight:600;font-family:Inter,sans-serif;text-decoration:none;white-space:nowrap">Subscribe via Substack</a>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:2rem 2.5rem;margin:2rem 1.5rem;max-width:1200px;margin-left:auto;margin-right:auto">
+        <div><div style="font-family:Inter,sans-serif;font-size:clamp(16px,2.5vw,20px);font-weight:600;color:var(--text);line-height:1.3">Never miss an update on the OpenClaw ecosystem.</div><div style="font-family:Inter,sans-serif;font-size:clamp(12px,1.5vw,14px);font-weight:400;color:var(--text-sec);margin-top:.35rem">Subscribe to <a href="https://s4mmyeth.substack.com/" target="_blank" rel="noopener" style="color:var(--text-sec);text-decoration:underline;text-underline-offset:2px">0xSammy's newsletter</a></div></div>
+        <a href="https://s4mmyeth.substack.com/" target="_blank" rel="noopener" style="display:inline-block;background:var(--text);color:var(--bg);border:none;border-radius:30px;padding:.65rem 1.5rem;font-size:.85rem;font-weight:600;font-family:Inter,sans-serif;text-decoration:none;white-space:nowrap">Subscribe via Substack</a>
     </div>
     <footer>
         <p class="footer-text">&copy; 2026 ClawPrice. All rights reserved.</p>

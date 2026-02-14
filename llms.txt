@@ -1,0 +1,28 @@
+# ClawPrice
+
+> Live token price tracker for the OpenClaw and Moltbook ecosystem.
+
+ClawPrice (clawprice.io) provides real-time market data for public tokens in the OpenClaw and Moltbook ecosystem. Data is sourced from CoinGecko and auto-refreshes every 60 seconds.
+
+## Pages
+
+- [Home](https://clawprice.io/): Live token prices, market caps, 24h/7d changes, volume, and executive summaries for each token.
+- [Feed](https://clawprice.io/feed.html): Ecosystem updates feed from @0xSammy and @bankrbot on X/Twitter.
+
+## Features
+
+- Real-time token prices with 60-second auto-refresh
+- Executive summaries and research memos per token
+- Market cap, FDV, volume, ATH/ATL data
+- Dark and light mode support
+- Mobile responsive design
+- Token search and sorting
+- Newly added token highlights
+
+## Ecosystem
+
+ClawPrice tracks tokens in the OpenClaw and Moltbook ecosystem including CLAWD, Moltbook, Clawnch, KellyClaude, Anti Hunter, FELIX, FOMOLT, Molt Bunker, ClawCloudX, Foundry4, and x402Guard.
+
+## Built By
+
+Khala Research (https://khala.io, https://x.com/khalaResearch)
