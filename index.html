@@ -241,7 +241,7 @@
     var sortAsc=false;
 
     var API_URL='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=moltbook-and-openclaw-themed&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h,7d';
-    var EXTRA_IDS=['antihunter','felix-3','bankercoin-2'];
+    var EXTRA_IDS=['antihunter','felix-3'];
     var EXTRA_URL='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='+EXTRA_IDS.join(',')+'&sparkline=false&price_change_percentage=24h,7d';
     var PROXIES=[function(u){return u},function(u){return'https://corsproxy.io/?'+encodeURIComponent(u)},function(u){return'https://api.allorigins.win/raw?url='+encodeURIComponent(u)}];
 
@@ -349,7 +349,7 @@
     function updateSortHeaders(){document.querySelectorAll('thead th.sortable').forEach(function(th){var col=th.getAttribute('onclick').match(/sortBy\('([^']+)'\)/);if(!col)return;col=col[1];var base=th.textContent.replace(/\s*[▲▼]/,'');th.textContent=col===sortCol?base+' '+(sortAsc?'▲':'▼'):base})}
 
     var NEWLY_ADDED=[
-        {id:'bankercoin-2',date:'Feb 14, 2026',note:'AI-powered DeFi agent on Base. Autonomous banking, yield strategies, and portfolio management.'}
+        {id:'antihunter',date:'Feb 14, 2026',note:'On-chain venture desk and autonomous treasury manager on Base'}
     ];
 
     var MEMO_DATA={
@@ -364,18 +364,6 @@
                 {label:'CoinGecko',url:'https://www.coingecko.com/en/coins/felix-3'},
                 {label:'DexScreener',url:'https://dexscreener.com/base/0x6e19027912db90892200a2b08c514921917bc55d7291ec878aa382c193b50084'},
                 {label:'Twitter/X',url:'https://x.com/FelixCraftAI'}
-            ]
-        },
-        'bankercoin-2':{
-            points:[
-                'AI-powered DeFi agent on Base. Autonomous banking, yield strategies, and portfolio management via the BANKR platform.',
-                'Built by the BANKR team. Twitter: <a href="https://x.com/bankaborofficial" target="_blank" rel="noopener">@bankaborofficial</a>',
-                'One of the highest market cap tokens in the OpenClaw ecosystem. Base chain deployment.'
-            ],
-            links:[
-                {label:'CoinGecko',url:'https://www.coingecko.com/en/coins/bankercoin-2'},
-                {label:'DexScreener',url:'https://dexscreener.com/base/0xaec085e5a5ce8d96a7bdd3eb3a62445d4f6ce703'},
-                {label:'Twitter/X',url:'https://x.com/bankaborofficial'}
             ]
         },
         'antihunter':{
