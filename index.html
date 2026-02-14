@@ -349,9 +349,7 @@
     function updateSortHeaders(){document.querySelectorAll('thead th.sortable').forEach(function(th){var col=th.getAttribute('onclick').match(/sortBy\('([^']+)'\)/);if(!col)return;col=col[1];var base=th.textContent.replace(/\s*[▲▼]/,'');th.textContent=col===sortCol?base+' '+(sortAsc?'▲':'▼'):base})}
 
     var NEWLY_ADDED=[
-        {id:'bankercoin-2',date:'Feb 14, 2026',fdvAtAdd:'--',note:'AI-powered DeFi agent on Base. Autonomous banking, yield strategies, and portfolio management.'},
-        {id:'antihunter',date:'Feb 14, 2026',fdvAtAdd:'$9.2M',note:'On-chain venture desk and autonomous treasury manager on Base'},
-        {id:'felix-3',date:'Feb 14, 2026',fdvAtAdd:'$2.4M',note:'AI agent crafting platform on Base with $62K revenue since launch'}
+        {id:'bankercoin-2',date:'Feb 14, 2026',note:'AI-powered DeFi agent on Base. Autonomous banking, yield strategies, and portfolio management.'}
     ];
 
     var MEMO_DATA={
