@@ -92,7 +92,7 @@
 
     <div class="filter-bar" id="filterBar">
         <button class="filter-pill active" onclick="filterEvents('all',this)">All</button>
-        <button class="filter-pill sort-pill" onclick="toggleSort(this)" style="margin-left:auto;font-family:'Fragment Mono',monospace">DATE ▼</button>
+        <button class="filter-pill sort-pill" onclick="toggleSort(this)" style="margin-left:auto;font-family:'Fragment Mono',monospace">DATE &#9660;</button>
     </div>
 
     <div class="events" id="events"></div>
@@ -472,19 +472,7 @@
         renderEvents();
     }
 
-    // Build token filter pills
-    var tickers=[];
-    EVENTS.forEach(function(e){if(tickers.indexOf(e.ticker)===-1)tickers.push(e.ticker)});
-    var bar=document.querySelector('.filter-bar');
-    tickers.forEach(function(t){
-        var btn=document.createElement('button');
-        btn.className='filter-pill';
-        btn.textContent=t;
-        btn.onclick=function(){filterEvents(t,btn)};
-        bar.appendChild(btn);
-    });
-
-    // Build token filter pills
+        // Build token filter pills
     (function(){
         var bar=document.getElementById('filterBar');
         var sortBtn=bar.querySelector('.sort-pill');
