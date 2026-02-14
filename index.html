@@ -186,8 +186,8 @@
     </div>
     <div class="stats">
         <div class="stat-box"><span class="stat-box-label">Market Cap</span><span class="stat-box-val" id="stat-mcap">--</span></div>
-        <div class="stat-box" id="stat-top-gain"><span class="stat-box-label">Top Mover (24h)</span><span class="stat-box-val">--</span></div>
-        <div class="stat-box" id="stat-top-loss"><span class="stat-box-label">Biggest Drop (24h)</span><span class="stat-box-val">--</span></div>
+        <div class="stat-box" id="stat-top-gain"><span class="stat-box-label">Top 24H Mover</span><span class="stat-box-val">--</span></div>
+        <div class="stat-box" id="stat-top-loss"><span class="stat-box-label">Biggest 24H Drop</span><span class="stat-box-val">--</span></div>
     </div>
     <div id="newly-added" style="background:color-mix(in srgb,var(--accent) 5%,var(--bg));border:1px solid color-mix(in srgb,var(--accent) 15%,var(--border));border-radius:10px;padding:1rem 1.25rem;margin:0 auto 1.5rem;display:none;max-width:700px;padding-left:1.5rem;padding-right:1.5rem">
         <div style="font-size:.7rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem">Newly Added</div>
@@ -284,8 +284,8 @@
             if(c!=null){if(!topG||c>topG.price_change_percentage_24h)topG=t;if(!topL||c<topL.price_change_percentage_24h)topL=t}
         });
         document.getElementById('stat-mcap').textContent=fmtUsd(total);
-        if(topG){var gc=topG.price_change_percentage_24h;document.getElementById('stat-top-gain').innerHTML='<span class="stat-box-label">Top Mover</span><a href="https://www.coingecko.com/en/coins/'+topG.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+topG.symbol.toUpperCase()+'</span><span class="stat-box-pct" style="color:var(--green)">'+fmtChange(gc)+'</span></a>'}
-        if(topL){var lc=topL.price_change_percentage_24h;document.getElementById('stat-top-loss').innerHTML='<span class="stat-box-label">Biggest Drop</span><a href="https://www.coingecko.com/en/coins/'+topL.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+topL.symbol.toUpperCase()+'</span><span class="stat-box-pct" style="color:var(--red)">'+fmtChange(lc)+'</span></a>'}
+        if(topG){var gc=topG.price_change_percentage_24h;document.getElementById('stat-top-gain').innerHTML='<span class="stat-box-label">Top 24H Mover</span><a href="https://www.coingecko.com/en/coins/'+topG.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+topG.symbol.toUpperCase()+'</span><span class="stat-box-pct" style="color:var(--green)">'+fmtChange(gc)+'</span></a>'}
+        if(topL){var lc=topL.price_change_percentage_24h;document.getElementById('stat-top-loss').innerHTML='<span class="stat-box-label">Biggest 24H Drop</span><a href="https://www.coingecko.com/en/coins/'+topL.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+topL.symbol.toUpperCase()+'</span><span class="stat-box-pct" style="color:var(--red)">'+fmtChange(lc)+'</span></a>'}
     }
 
     function getFiltered(){
