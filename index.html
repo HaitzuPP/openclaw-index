@@ -204,7 +204,6 @@
                 <tr>
                     <th class="sortable" onclick="sortBy('rank')">#</th>
                     <th class="sortable" onclick="sortBy('name')">Token</th>
-                    <th class="hide-mobile">Description</th>
                     <th class="sortable" onclick="sortBy('change24h')">24h</th>
                     <th class="sortable hide-mobile" onclick="sortBy('change7d')">7d</th>
                     <th class="sortable" onclick="sortBy('mcap')">Market Cap</th>
@@ -335,7 +334,6 @@
             html+='<td class="td-rank">'+(i+1)+'</td>';
             var memo=MEMO_DATA[t.id];var desc=memo&&memo.points&&memo.points[0]?memo.points[0].replace(/<[^>]+>/g,''):'';
             html+='<td><div class="td-token">'+(t.image&&t.image.startsWith('https://')?'<img src="'+esc(t.image)+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'')+'<div><span class="td-token-name">'+esc(t.name)+'</span> <span class="td-symbol">'+esc(t.symbol.toUpperCase())+'</span></div></div></td>';
-            html+='<td class="td-desc hide-mobile">'+desc+'</td>';
             html+='<td class="td-change '+(c24!=null?c24cls:'')+'">'+fmtChange(c24)+'</td>';
             html+='<td class="td-change hide-mobile '+(c7d!=null?c7dcls:'')+'">'+fmtChange(c7d)+'</td>';
             html+='<td class="td-cap">'+fmtUsd(t.market_cap)+'</td>';
