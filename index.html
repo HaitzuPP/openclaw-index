@@ -140,6 +140,8 @@
         .loading-msg{text-align:center;padding:3rem;color:var(--text-muted);font-size:.85rem}
         @keyframes pulsedot{0%,100%{opacity:.4}50%{opacity:1}}
         .loading-dot{animation:pulsedot 1.5s infinite}
+        @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+        .skel{height:12px;border-radius:4px;background:linear-gradient(90deg,var(--border) 25%,var(--border-hover) 50%,var(--border) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite}
         @media(max-width:768px){
             .hamburger{display:block}
             .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--border);padding:1rem 1.5rem;flex-direction:column;align-items:flex-start;gap:1rem}
@@ -209,7 +211,7 @@
                 </tr>
             </thead>
             <tbody id="table-body">
-                <tr><td colspan="7" class="loading-msg"><span class="loading-dot">Loading tokens...</span></td></tr>
+<script>document.write(Array(8).fill('<tr>'+['3rem','10rem','4rem','4rem','5rem','5rem','5rem'].map(function(w,i){return'<td'+(i===3||i===5?' class="hide-mobile"':'')+'><div class="skel" style="width:'+w+'"></div></td>'}).join('')+'</tr>').join(''))</script>
             </tbody>
         </table>
     </div>
