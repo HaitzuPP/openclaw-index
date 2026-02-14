@@ -563,7 +563,7 @@
     function closeModal(){document.getElementById('modal-overlay').classList.remove('active')}
     document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()});
 
-    var retryCount=0;var MAX_RETRIES=3;var CACHE_KEY='clawprice-cache';var CACHE_TTL=60000;
+    var retryCount=0;var MAX_RETRIES=3;var CACHE_KEY='clawprice-cache';var CACHE_TTL=300000;
     function getCached(){try{var c=JSON.parse(localStorage.getItem(CACHE_KEY));if(c&&Date.now()-c.ts<CACHE_TTL)return c.data}catch(e){}return null}
     function setCache(data){try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:data}))}catch(e){}}
     async function loadData(useCache){
