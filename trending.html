@@ -90,8 +90,9 @@
         <p>Curated announcements on ClawPrice token constituents. Manually added by Khala Research.</p>
     </div>
 
-    <div class="filter-bar">
+    <div class="filter-bar" id="filterBar">
         <button class="filter-pill active" onclick="filterEvents('all',this)">All</button>
+        <button class="filter-pill sort-pill" onclick="toggleSort(this)" style="margin-left:auto;font-family:'Fragment Mono',monospace">DATE ▼</button>
     </div>
 
     <div class="events" id="events"></div>
@@ -429,9 +430,16 @@
         },
     ];
 
+    var sortAsc=false;
+    var currentFilter='all';
+
+    function parseDate(s){return new Date(s.replace(/ ET$/,''))}
+
     function renderEvents(filter){
+        if(filter!==undefined)currentFilter=filter;
         var el=document.getElementById('events');
-        var filtered=filter==='all'?EVENTS:EVENTS.filter(function(e){return e.ticker===filter});
+        var filtered=currentFilter==='all'?EVENTS.slice():EVENTS.filter(function(e){return e.ticker===currentFilter});
+        filtered.sort(function(a,b){var d=parseDate(b.date)-parseDate(a.date);return sortAsc?-d:d});
         if(!filtered.length){el.innerHTML='<div style="text-align:center;color:var(--text-muted);padding:3rem">No events match this filter.</div>';return}
         el.innerHTML=filtered.map(function(e){
             return '<div class="event" onclick="toggleEvent(this)">'+
@@ -453,9 +461,15 @@
     function toggleEvent(el){el.classList.toggle('expanded')}
 
     function filterEvents(cat,btn){
-        document.querySelectorAll('.filter-pill').forEach(function(p){p.classList.remove('active')});
+        document.querySelectorAll('.filter-pill:not(.sort-pill)').forEach(function(p){p.classList.remove('active')});
         btn.classList.add('active');
         renderEvents(cat);
+    }
+
+    function toggleSort(btn){
+        sortAsc=!sortAsc;
+        btn.textContent='DATE '+(sortAsc?'\u25B2':'\u25BC');
+        renderEvents();
     }
 
     // Build token filter pills
@@ -470,6 +484,19 @@
         bar.appendChild(btn);
     });
 
+    // Build token filter pills
+    (function(){
+        var bar=document.getElementById('filterBar');
+        var sortBtn=bar.querySelector('.sort-pill');
+        var seen={};
+        EVENTS.forEach(function(e){if(!seen[e.ticker]){seen[e.ticker]=1;
+            var b=document.createElement('button');
+            b.className='filter-pill';
+            b.textContent=e.ticker;
+            b.onclick=function(){filterEvents(e.ticker,b)};
+            bar.insertBefore(b,sortBtn);
+        }});
+    })();
     renderEvents('all');
     </script>
 </body>
