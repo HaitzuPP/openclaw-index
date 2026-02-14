@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClawPrice | Live OpenClaw & Moltbook Token Prices</title>
-    <meta name="description" content="Live prices, market caps, and volume for OpenClaw and Moltbook ecosystem tokens. Auto-refreshes every 60 seconds. Track CLAWD, Moltbook, Clawnch, and more.">
+    <meta name="description" content="Live prices, market caps, and volume for OpenClaw and Moltbook ecosystem tokens. Auto-refreshes every 5 minutes. Track CLAWD, Moltbook, Clawnch, and more.">
     <meta name="keywords" content="ClawPrice, OpenClaw, Moltbook, token tracker, crypto prices, CLAWD, Clawnch, KellyClaude, Anti Hunter, FELIX, Base chain, AI agents, DeFi">
     <meta property="og:title" content="ClawPrice | Live OpenClaw & Moltbook Token Prices">
-    <meta property="og:description" content="Live prices, market caps, and volume for OpenClaw and Moltbook ecosystem tokens. Auto-refreshes every 60 seconds.">
+    <meta property="og:description" content="Live prices, market caps, and volume for OpenClaw and Moltbook ecosystem tokens. Auto-refreshes every 5 minutes.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://clawprice.io/">
     <meta property="og:site_name" content="ClawPrice">
@@ -17,7 +17,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://clawprice.io/og-image.png">
     <meta name="twitter:title" content="ClawPrice | Live OpenClaw & Moltbook Token Prices">
-    <meta name="twitter:description" content="Live prices, market caps, and volume for OpenClaw and Moltbook ecosystem tokens. Auto-refreshes every 60 seconds.">
+    <meta name="twitter:description" content="Live prices, market caps, and volume for OpenClaw and Moltbook ecosystem tokens. Auto-refreshes every 5 minutes.">
     <meta name="twitter:site" content="@khalaResearch">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="canonical" href="https://clawprice.io/">
@@ -376,7 +376,7 @@
             html+='</tr>';
         });
         tbody.innerHTML=html;
-        document.getElementById('last-updated').textContent='Last updated: '+new Date().toLocaleTimeString()+' - Auto-refreshes every 60s';
+        document.getElementById('last-updated').textContent='Last updated: '+new Date().toLocaleTimeString()+' - Auto-refreshes every 5 min';
     }
 
     function sortBy(col){if(sortCol===col)sortAsc=!sortAsc;else{sortCol=col;sortAsc=col==='name'||col==='symbol'}updateSortHeaders();renderTable()}
