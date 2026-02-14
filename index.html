@@ -160,7 +160,7 @@
         <div class="stat-box" id="stat-top-gain"><span class="stat-box-label">Top Mover (24h)</span><span class="stat-box-val">--</span></div>
         <div class="stat-box" id="stat-top-loss"><span class="stat-box-label">Biggest Drop (24h)</span><span class="stat-box-val">--</span></div>
     </div>
-    <div id="newly-added" style="background:color-mix(in srgb,var(--accent) 5%,var(--bg));border:1px solid color-mix(in srgb,var(--accent) 15%,var(--border));border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:none">
+    <div id="newly-added" style="background:color-mix(in srgb,var(--accent) 5%,var(--bg));border:1px solid color-mix(in srgb,var(--accent) 15%,var(--border));border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;display:none;max-width:700px">
         <div style="font-size:.7rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem">Newly Added</div>
         <div id="newly-added-list" style="display:flex;flex-direction:column;gap:.35rem;font-size:.85rem;color:var(--text-sec)"></div>
     </div>
@@ -308,7 +308,9 @@
 
     function sortBy(col){if(sortCol===col)sortAsc=!sortAsc;else{sortCol=col;sortAsc=col==='name'||col==='symbol'}renderTable()}
 
-    var NEWLY_ADDED=['felix-3'];
+    var NEWLY_ADDED=[
+        {id:'felix-3',date:'Feb 14, 2026',fdvAtAdd:'$2.4M',note:'AI agent crafting platform on Base with $62K revenue since launch'}
+    ];
 
     var MEMO_DATA={
         'felix-3':{
@@ -487,13 +489,14 @@
         var wrap=document.getElementById('newly-added');
         if(!el||!wrap)return;
         var html='';
-        NEWLY_ADDED.forEach(function(id){
-            var t=allTokens.find(function(x){return x.id===id});
+        NEWLY_ADDED.forEach(function(entry){
+            var t=allTokens.find(function(x){return x.id===entry.id});
             if(!t)return;
-            var pct=t.price_change_percentage_24h;
-            var pctStr=pct!=null?(pct>=0?'+':'')+pct.toFixed(1)+'%':'--';
-            var pctColor=pct>=0?'var(--green)':'var(--red)';
-            html+='<div style="cursor:pointer" onclick="showModal(\''+id+'\')"><span style="color:var(--text);font-weight:500">'+t.name+'</span> <span style="color:var(--text-muted)">'+t.symbol.toUpperCase()+'</span> - '+fmtUsd(t.market_cap)+' <span style="color:'+pctColor+'">'+pctStr+'</span></div>';
+            html+='<div style="cursor:pointer;padding:.5rem 0;border-bottom:1px solid var(--border)" onclick="showModal(\''+entry.id+'\')">';
+            html+='<div><span style="color:var(--text);font-weight:500">'+t.name+'</span> <span style="color:var(--text-muted);font-size:.75rem">'+t.symbol.toUpperCase()+'</span></div>';
+            html+='<div style="font-size:.75rem;color:var(--text-muted);margin-top:.25rem">Added '+entry.date+' - FDV at listing: '+entry.fdvAtAdd+'</div>';
+            html+='<div style="font-size:.8rem;color:var(--text-sec);margin-top:.25rem">'+entry.note+'</div>';
+            html+='</div>';
         });
         if(html){wrap.style.display='block';el.innerHTML=html}
     }
