@@ -274,19 +274,17 @@
     var sortCol='mcap';
     var sortAsc=false;
 
-    var API_URL='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=moltbook-and-openclaw-themed&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h,7d';
+    var CG_KEY='CG-P3BRbm3gsbb43r5bGEXuSFJE';
+    var API_URL='https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=moltbook-and-openclaw-themed&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h,7d';
     var EXTRA_IDS=['antihunter','felix-3'];
-    var EXTRA_URL='https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='+EXTRA_IDS.join(',')+'&sparkline=false&price_change_percentage=24h,7d';
-    var PROXIES=[function(u){return u},function(u){return'https://corsproxy.io/?'+encodeURIComponent(u)},function(u){return'https://api.allorigins.win/raw?url='+encodeURIComponent(u)}];
+    var EXTRA_URL='https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='+EXTRA_IDS.join(',')+'&sparkline=false&price_change_percentage=24h,7d';
 
     async function fetchUrl(url){
-        for(var i=0;i<PROXIES.length;i++){
-            try{
-                var ctrl=new AbortController();var tid=setTimeout(function(){ctrl.abort()},8000);
-                var r=await fetch(PROXIES[i](url),{signal:ctrl.signal});clearTimeout(tid);
-                if(r.ok){return await r.json()}
-            }catch(e){}
-        }
+        try{
+            var ctrl=new AbortController();var tid=setTimeout(function(){ctrl.abort()},10000);
+            var r=await fetch(url,{headers:{'x-cg-pro-api-key':CG_KEY},signal:ctrl.signal});clearTimeout(tid);
+            if(r.ok){return await r.json()}
+        }catch(e){}
         return null;
     }
 
