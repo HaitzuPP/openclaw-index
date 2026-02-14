@@ -76,7 +76,9 @@
         <p>Material announcements that moved OpenClaw token prices.</p>
     </div>
 
-    <div class="filter-bar"></div>
+    <div class="filter-bar">
+        <button class="filter-pill active" onclick="filterEvents('all',this)">All</button>
+    </div>
 
     <div class="events" id="events"></div>
 
@@ -325,7 +327,7 @@
 
     function renderEvents(filter){
         var el=document.getElementById('events');
-        var filtered=filter==='all'?EVENTS:EVENTS.filter(function(e){return e.impactDir===filter});
+        var filtered=filter==='all'?EVENTS:EVENTS.filter(function(e){return e.ticker===filter});
         if(!filtered.length){el.innerHTML='<div style="text-align:center;color:var(--text-muted);padding:3rem">No events match this filter.</div>';return}
         el.innerHTML=filtered.map(function(e){
             return '<div class="event" onclick="toggleEvent(this)">'+
@@ -351,6 +353,18 @@
         btn.classList.add('active');
         renderEvents(cat);
     }
+
+    // Build token filter pills
+    var tickers=[];
+    EVENTS.forEach(function(e){if(tickers.indexOf(e.ticker)===-1)tickers.push(e.ticker)});
+    var bar=document.querySelector('.filter-bar');
+    tickers.forEach(function(t){
+        var btn=document.createElement('button');
+        btn.className='filter-pill';
+        btn.textContent=t;
+        btn.onclick=function(){filterEvents(t,btn)};
+        bar.appendChild(btn);
+    });
 
     renderEvents('all');
     </script>
