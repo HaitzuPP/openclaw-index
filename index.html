@@ -267,6 +267,7 @@
         return merged;
     }
 
+    function esc(s){if(!s)return'';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
     function fmtUsd(n){
         if(n==null)return'--';
         if(n>=1e9)return'$'+(n/1e9).toFixed(2)+'B';
@@ -287,8 +288,8 @@
             if(c!=null){if(!topG||c>topG.price_change_percentage_24h)topG=t;if(!topL||c<topL.price_change_percentage_24h)topL=t}
         });
         document.getElementById('stat-mcap').textContent=fmtUsd(total);
-        if(topG){var gc=topG.price_change_percentage_24h;document.getElementById('stat-top-gain').innerHTML='<span class="stat-box-label">Top 24H Mover</span><a href="https://www.coingecko.com/en/coins/'+topG.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+topG.symbol.toUpperCase()+'</span><span class="stat-box-pct" style="color:var(--green)">'+fmtChange(gc)+'</span></a>'}
-        if(topL){var lc=topL.price_change_percentage_24h;document.getElementById('stat-top-loss').innerHTML='<span class="stat-box-label">Biggest 24H Drop</span><a href="https://www.coingecko.com/en/coins/'+topL.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+topL.symbol.toUpperCase()+'</span><span class="stat-box-pct" style="color:var(--red)">'+fmtChange(lc)+'</span></a>'}
+        if(topG){var gc=topG.price_change_percentage_24h;document.getElementById('stat-top-gain').innerHTML='<span class="stat-box-label">Top 24H Mover</span><a href="https://www.coingecko.com/en/coins/'+topG.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+esc(topG.symbol.toUpperCase())+'</span><span class="stat-box-pct" style="color:var(--green)">'+fmtChange(gc)+'</span></a>'}
+        if(topL){var lc=topL.price_change_percentage_24h;document.getElementById('stat-top-loss').innerHTML='<span class="stat-box-label">Biggest 24H Drop</span><a href="https://www.coingecko.com/en/coins/'+topL.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+esc(topL.symbol.toUpperCase())+'</span><span class="stat-box-pct" style="color:var(--red)">'+fmtChange(lc)+'</span></a>'}
     }
 
     function getFiltered(){
@@ -332,7 +333,7 @@
             html+='<tr onclick="showModal(\''+t.id+'\')">';
             html+='<td class="td-rank">'+(i+1)+'</td>';
             var memo=MEMO_DATA[t.id];var desc=memo&&memo.points&&memo.points[0]?memo.points[0].replace(/<[^>]+>/g,''):'';
-            html+='<td><div class="td-token">'+(t.image?'<img src="'+t.image+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'')+'<div><span class="td-token-name">'+t.name+'</span> <span class="td-symbol">'+t.symbol.toUpperCase()+'</span></div></div></td>';
+            html+='<td><div class="td-token">'+(t.image&&t.image.startsWith('https://')?'<img src="'+esc(t.image)+'" alt="" loading="lazy" onerror="this.style.display=\'none\'">':'')+'<div><span class="td-token-name">'+esc(t.name)+'</span> <span class="td-symbol">'+esc(t.symbol.toUpperCase())+'</span></div></div></td>';
             html+='<td class="td-desc hide-mobile">'+desc+'</td>';
             html+='<td class="td-change '+(c24!=null?c24cls:'')+'">'+fmtChange(c24)+'</td>';
             html+='<td class="td-change hide-mobile '+(c7d!=null?c7dcls:'')+'">'+fmtChange(c7d)+'</td>';
@@ -498,7 +499,7 @@
         var memo=MEMO_DATA[id];
         var m=document.getElementById('modal');
         var html='<button class="modal-close" onclick="closeModal()">&times;</button>'+
-            '<div class="modal-token-head">'+(t.image?'<img src="'+t.image+'" alt="">':'')+'<div><div class="modal-ticker">'+t.symbol.toUpperCase()+'</div><div class="modal-name">'+t.name+'</div></div></div>'+
+            '<div class="modal-token-head">'+(t.image&&t.image.startsWith('https://')?'<img src="'+esc(t.image)+'" alt="">':'')+'<div><div class="modal-ticker">'+esc(t.symbol.toUpperCase())+'</div><div class="modal-name">'+esc(t.name)+'</div></div></div>'+
             '<div class="modal-stats">'+
             '<div class="modal-stat"><div class="modal-stat-val">'+fmtUsd(t.market_cap)+'</div><div class="modal-stat-lbl">Market Cap</div></div>'+
             '<div class="modal-stat"><div class="modal-stat-val">'+fmtUsd(t.fully_diluted_valuation)+'</div><div class="modal-stat-lbl">FDV</div></div>'+
@@ -547,7 +548,7 @@
             var t=allTokens.find(function(x){return x.id===entry.id});
             if(!t)return;
             html+='<div style="cursor:pointer;padding:.5rem 0;border-bottom:1px solid var(--border)" onclick="showModal(\''+entry.id+'\')">';
-            html+='<div><span style="color:var(--text);font-weight:500">'+t.name+'</span> <span style="color:var(--text-muted);font-size:.75rem">'+t.symbol.toUpperCase()+'</span></div>';
+            html+='<div><span style="color:var(--text);font-weight:500">'+esc(t.name)+'</span> <span style="color:var(--text-muted);font-size:.75rem">'+esc(t.symbol.toUpperCase())+'</span></div>';
             html+='<div style="font-size:.75rem;color:var(--text-muted);margin-top:.25rem">Added '+entry.date+'</div>';
             html+='<div style="font-size:.8rem;color:var(--text-sec);margin-top:.25rem">'+entry.note+'</div>';
             html+='</div>';
