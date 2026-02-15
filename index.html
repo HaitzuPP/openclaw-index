@@ -109,6 +109,7 @@
         .td-change.up{color:var(--green)}
         .td-change.down{color:var(--red)}
         .td-cap{font-size:.8rem;color:var(--text-sec);white-space:nowrap}
+        .sparkline{display:block;width:120px;height:36px}
         .last-updated{max-width:1200px;margin:0 auto;padding:0 1.5rem 2rem;text-align:center;color:var(--text-muted);font-size:.75rem}
         .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:200;justify-content:center;align-items:center;padding:1rem}
         .modal-overlay.active{display:flex}
@@ -241,10 +242,11 @@
                     <th class="sortable" onclick="sortBy('mcap')">Market Cap</th>
                     <th class="sortable hide-mobile" onclick="sortBy('fdv')">FDV</th>
                     <th class="sortable" onclick="sortBy('vol')">Volume</th>
+                    <th class="sortable hide-mobile" onclick="sortBy('spark')">7D Chart</th>
                 </tr>
             </thead>
             <tbody id="table-body">
-<script>document.write(Array(8).fill('<tr>'+['3rem','10rem','4rem','4rem','5rem','5rem','5rem'].map(function(w,i){return'<td'+(i===3||i===5?' class="hide-mobile"':'')+'><div class="skel" style="width:'+w+'"></div></td>'}).join('')+'</tr>').join(''))</script>
+<script>document.write(Array(8).fill('<tr>'+['3rem','10rem','4rem','4rem','5rem','5rem','5rem','7rem'].map(function(w,i){return'<td'+([3,5,7].indexOf(i)>=0?' class="hide-mobile"':'')+'><div class="skel" style="width:'+w+'"></div></td>'}).join('')+'</tr>').join(''))</script>
             </tbody>
         </table>
     </div>
@@ -276,9 +278,9 @@
     var sortAsc=false;
 
     var CG_KEY='CG-P3BRbm3gsbb43r5bGEXuSFJE';
-    var API_URL='https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=moltbook-and-openclaw-themed&order=market_cap_desc&per_page=50&page=1&sparkline=false&price_change_percentage=24h,7d';
+    var API_URL='https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd&category=moltbook-and-openclaw-themed&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=24h,7d';
     var EXTRA_IDS=['antihunter','felix-3'];
-    var EXTRA_URL='https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='+EXTRA_IDS.join(',')+'&sparkline=false&price_change_percentage=24h,7d';
+    var EXTRA_URL='https://pro-api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids='+EXTRA_IDS.join(',')+'&sparkline=true&price_change_percentage=24h,7d';
 
     async function fetchUrl(url){
         try{
@@ -346,6 +348,7 @@
             else if(col==='mcap'){va=a.market_cap||0;vb=b.market_cap||0}
             else if(col==='fdv'){va=a.fully_diluted_valuation||0;vb=b.fully_diluted_valuation||0}
             else if(col==='vol'){va=a.total_volume||0;vb=b.total_volume||0}
+            else if(col==='spark'){var sa=a.sparkline_in_7d&&a.sparkline_in_7d.price;var sb=b.sparkline_in_7d&&b.sparkline_in_7d.price;va=sa?(sa[sa.length-1]-sa[0])/sa[0]*100:0;vb=sb?(sb[sb.length-1]-sb[0])/sb[0]*100:0}
             else{va=0;vb=0}
             if(typeof va==='string')return asc?va.localeCompare(vb):vb.localeCompare(va);
             return asc?va-vb:vb-va;
@@ -356,7 +359,7 @@
     function renderTable(){
         var filtered=sortTokens(getFiltered());
         var tbody=document.getElementById('table-body');
-        if(filtered.length===0){tbody.innerHTML='<tr><td colspan="8" class="loading-msg">No tokens found.</td></tr>';return}
+        if(filtered.length===0){tbody.innerHTML='<tr><td colspan="9" class="loading-msg">No tokens found.</td></tr>';return}
         var html='';
         filtered.forEach(function(t,i){
             var c24=t.price_change_percentage_24h;
@@ -372,10 +375,36 @@
             html+='<td class="td-cap">'+fmtUsd(t.market_cap)+'</td>';
             html+='<td class="td-cap hide-mobile">'+fmtUsd(t.fully_diluted_valuation)+'</td>';
             html+='<td class="td-cap">'+fmtUsd(t.total_volume)+'</td>';
+            html+='<td class="hide-mobile"><canvas class="sparkline" data-idx="'+i+'" width="120" height="36"></canvas></td>';
             html+='</tr>';
         });
         tbody.innerHTML=html;
         document.getElementById('last-updated').textContent='Last updated: '+new Date().toLocaleTimeString()+' - Auto-refreshes every 5 min';
+        drawSparklines(filtered);
+    }
+
+    function drawSparklines(tokens){
+        document.querySelectorAll('canvas.sparkline').forEach(function(c){
+            var idx=parseInt(c.getAttribute('data-idx'));
+            var t=tokens[idx];if(!t||!t.sparkline_in_7d||!t.sparkline_in_7d.price)return;
+            var prices=t.sparkline_in_7d.price;
+            var ctx=c.getContext('2d');
+            var w=c.width,h=c.height;
+            ctx.clearRect(0,0,w,h);
+            var min=Math.min.apply(null,prices),max=Math.max.apply(null,prices);
+            var range=max-min||1;
+            var step=w/(prices.length-1);
+            var up=prices[prices.length-1]>=prices[0];
+            ctx.strokeStyle=up?'#22c55e':'#ef4444';
+            ctx.lineWidth=1.5;
+            ctx.beginPath();
+            prices.forEach(function(p,i){
+                var x=i*step;
+                var y=h-((p-min)/range)*(h-4)-2;
+                if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+            });
+            ctx.stroke();
+        });
     }
 
     function sortBy(col){if(sortCol===col)sortAsc=!sortAsc;else{sortCol=col;sortAsc=col==='name'||col==='symbol'}updateSortHeaders();renderTable()}
@@ -569,7 +598,7 @@
         var cached=useCache!==false?getCached():null;
         var data=cached||await fetchWithFallback();
         if(data&&!cached)setCache(data);
-        if(!data){retryCount++;if(retryCount<=MAX_RETRIES){document.getElementById('table-body').innerHTML='<tr><td colspan="8" class="loading-msg">Failed to load data. Retrying ('+retryCount+'/'+MAX_RETRIES+')...</td></tr>';setTimeout(loadData,5000)}else{document.getElementById('table-body').innerHTML='<tr><td colspan="8" class="loading-msg">Unable to load data. <button onclick="retryCount=0;loadData()" style="background:var(--accent);color:#fff;border:none;padding:.4rem 1rem;border-radius:6px;cursor:pointer;font-family:inherit;margin-left:.5rem">Retry</button></td></tr>'}return}
+        if(!data){retryCount++;if(retryCount<=MAX_RETRIES){document.getElementById('table-body').innerHTML='<tr><td colspan="9" class="loading-msg">Failed to load data. Retrying ('+retryCount+'/'+MAX_RETRIES+')...</td></tr>';setTimeout(loadData,5000)}else{document.getElementById('table-body').innerHTML='<tr><td colspan="9" class="loading-msg">Unable to load data. <button onclick="retryCount=0;loadData()" style="background:var(--accent);color:#fff;border:none;padding:.4rem 1rem;border-radius:6px;cursor:pointer;font-family:inherit;margin-left:.5rem">Retry</button></td></tr>'}return}
         retryCount=0;
         allTokens=data.filter(function(t){return (t.fully_diluted_valuation||0)>=250000});
         updateStats();
