@@ -380,7 +380,7 @@
         });
         tbody.innerHTML=html;
         document.getElementById('last-updated').textContent='Last updated: '+new Date().toLocaleTimeString()+' - Auto-refreshes every 5 min';
-        drawSparklines(filtered);
+        setTimeout(function(){drawSparklines(filtered)},50);
     }
 
     function drawSparklines(tokens){
