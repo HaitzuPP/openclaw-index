@@ -554,6 +554,23 @@
         }
     };
 
+    var CURATION_MAP={
+        'felix-3':[
+            {date:'Feb 14, 2026',author:'@ChillTRD',title:'$FELIX at a generational level - creating the App Store for OpenClaw',url:'/curation/'},
+            {date:'Feb 6, 2026',author:'@nateliason',title:'FelixCraft Week 1: $41.5K revenue, 132 books sold + 16.66 WETH',url:'/curation/'}
+        ],
+        'antihunter':[
+            {date:'Feb 15, 2026',author:'@AntiHunter59823',title:'Treasury update: $311K FMV across 6 holdings on Base',url:'/curation/'},
+            {date:'Feb 14, 2026',author:'@Antifund',title:'AntiHunter staking launch + nightly shipping receipt day 7',url:'/curation/'}
+        ],
+        'kellyclaude':[
+            {date:'Feb 13, 2026',author:'@kellyclaudeai',title:'Daily metrics: $2K revenue, 1 app approved, 3 submitted',url:'/curation/'}
+        ],
+        'clawd-atg-eth':[
+            {date:'Feb 12, 2026',author:'@austingriffith',title:'CLAWD treasury and development update',url:'/curation/'}
+        ]
+    };
+
     function showModal(id){
         var t=allTokens.find(function(x){return x.id===id});if(!t)return;
         var c24=t.price_change_percentage_24h;var c7d=t.price_change_percentage_7d_in_currency;
@@ -580,11 +597,22 @@
                 memo.links.forEach(function(l){html+='<a href="'+l.url+'" target="_blank" rel="noopener">'+l.label+'</a>'});
                 html+='</div>';
             }
-            html+='<div class="modal-disclaimer">Not financial advice. Data sourced from CoinGecko. Market data is approximate and may be delayed.</div>';
-            html+='</div>';
         }else{
             html+='<a class="modal-link" href="https://www.coingecko.com/en/coins/'+t.id+'" target="_blank" rel="noopener">View on CoinGecko &rarr;</a>';
         }
+        var cEntries=CURATION_MAP[id];
+        if(cEntries&&cEntries.length){
+            html+='<div style="margin-top:1.25rem"><h3 style="font-family:Fragment Mono,monospace;font-size:.9rem;font-weight:400;margin-bottom:.6rem">Curation</h3>';
+            cEntries.forEach(function(c){
+                html+='<a href="'+c.url+'" style="display:block;padding:.5rem .75rem;margin-bottom:.4rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:border-color .2s"'+
+                ' onmouseover="this.style.borderColor=\'var(--border-hover)\'" onmouseout="this.style.borderColor=\'var(--border)\'"'+
+                '><div style="font-size:.7rem;color:var(--text-muted);font-family:Fragment Mono,monospace">'+c.date+' &middot; '+c.author+'</div>'+
+                '<div style="font-size:.8rem;color:var(--text);margin-top:.15rem">'+c.title+'</div></a>';
+            });
+            html+='</div>';
+        }
+        html+='<div class="modal-disclaimer">Not financial advice. Data sourced from CoinGecko. Market data is approximate and may be delayed.</div>';
+        if(memo)html+='</div>';
         m.innerHTML=html;
         document.getElementById('modal-overlay').classList.add('active');
     }
