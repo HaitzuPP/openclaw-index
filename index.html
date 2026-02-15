@@ -588,6 +588,17 @@
             '</div>'+
             '<div style="margin-bottom:.5rem"><span style="font-size:.8rem;color:var(--text-muted)">ATH:</span> <span style="font-family:Fragment Mono,monospace;font-size:.85rem">'+fmtUsd(t.ath)+'</span></div>'+
             '<div style="margin-bottom:1rem"><span style="font-size:.8rem;color:var(--text-muted)">ATL:</span> <span style="font-family:Fragment Mono,monospace;font-size:.85rem">'+fmtUsd(t.atl)+'</span></div>';
+        var cEntries=CURATION_MAP[id];
+        if(cEntries&&cEntries.length){
+            html+='<div style="margin-top:1.25rem;margin-bottom:1.25rem"><h3 style="font-family:Fragment Mono,monospace;font-size:.9rem;font-weight:400;margin-bottom:.6rem">Curation</h3>';
+            cEntries.forEach(function(c){
+                html+='<a href="'+c.url+'" style="display:block;padding:.5rem .75rem;margin-bottom:.4rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:border-color .2s"'+
+                ' onmouseover="this.style.borderColor=\'var(--border-hover)\'" onmouseout="this.style.borderColor=\'var(--border)\'"'+
+                '><div style="font-size:.7rem;color:var(--text-muted);font-family:Fragment Mono,monospace">'+c.date+' &middot; '+c.author+'</div>'+
+                '<div style="font-size:.8rem;color:var(--text);margin-top:.15rem">'+c.title+'</div></a>';
+            });
+            html+='</div>';
+        }
         if(memo){
             html+='<div class="modal-memo"><h3>Exec Summary</h3><ul class="modal-memo-list">';
             memo.points.forEach(function(p){html+='<li>'+p+'</li>'});
@@ -597,22 +608,11 @@
                 memo.links.forEach(function(l){html+='<a href="'+l.url+'" target="_blank" rel="noopener">'+l.label+'</a>'});
                 html+='</div>';
             }
+            html+='<div class="modal-disclaimer">Not financial advice. Data sourced from CoinGecko. Market data is approximate and may be delayed.</div>';
+            html+='</div>';
         }else{
             html+='<a class="modal-link" href="https://www.coingecko.com/en/coins/'+t.id+'" target="_blank" rel="noopener">View on CoinGecko &rarr;</a>';
         }
-        var cEntries=CURATION_MAP[id];
-        if(cEntries&&cEntries.length){
-            html+='<div style="margin-top:1.25rem"><h3 style="font-family:Fragment Mono,monospace;font-size:.9rem;font-weight:400;margin-bottom:.6rem">Curation</h3>';
-            cEntries.forEach(function(c){
-                html+='<a href="'+c.url+'" style="display:block;padding:.5rem .75rem;margin-bottom:.4rem;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;text-decoration:none;transition:border-color .2s"'+
-                ' onmouseover="this.style.borderColor=\'var(--border-hover)\'" onmouseout="this.style.borderColor=\'var(--border)\'"'+
-                '><div style="font-size:.7rem;color:var(--text-muted);font-family:Fragment Mono,monospace">'+c.date+' &middot; '+c.author+'</div>'+
-                '<div style="font-size:.8rem;color:var(--text);margin-top:.15rem">'+c.title+'</div></a>';
-            });
-            html+='</div>';
-        }
-        html+='<div class="modal-disclaimer">Not financial advice. Data sourced from CoinGecko. Market data is approximate and may be delayed.</div>';
-        if(memo)html+='</div>';
         m.innerHTML=html;
         document.getElementById('modal-overlay').classList.add('active');
     }
