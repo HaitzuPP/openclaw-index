@@ -20,6 +20,7 @@
     <meta name="twitter:title" content="ClawPrice | Live OpenClaw & Moltbook Token Prices">
     <meta name="twitter:description" content="Live prices, market caps, and volume for OpenClaw and Moltbook ecosystem tokens. Auto-refreshes every 5 minutes.">
     <meta name="twitter:site" content="@khalaResearch">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://cg-proxy.jack-3ac.workers.dev https://www.google-analytics.com; frame-ancestors 'none'">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="canonical" href="https://clawprice.io/">
     <script type="application/ld+json">
@@ -166,6 +167,7 @@
         }
     </style>
     <script>(function(){var t=localStorage.getItem('clawprice-theme');if(t)document.documentElement.setAttribute('data-theme',t)})()</script>
+    <script>if(top!==self)top.location=self.location</script>
 </head>
 <body>
     <noscript>
@@ -229,7 +231,7 @@
         <div id="newly-added-list" style="display:flex;flex-direction:column;gap:.35rem;font-size:.85rem;color:var(--text-sec)"></div>
     </div>
     <div class="controls">
-        <input type="text" class="search-box" placeholder="Search token or symbol..." id="search-input" oninput="renderTable()">
+        <input type="text" class="search-box" placeholder="Search token or symbol..." id="search-input" maxlength="100" oninput="renderTable()">
     </div>
     <div class="table-wrap">
         <table id="token-table">
