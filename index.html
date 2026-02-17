@@ -274,7 +274,7 @@
 
     var CG_PROXY='https://cg-proxy.jack-3ac.workers.dev';
     var API_URL='https://cg-proxy.jack-3ac.workers.dev/api/v3/coins/markets?vs_currency=usd&category=moltbook-and-openclaw-themed&order=market_cap_desc&per_page=50&page=1&sparkline=true&price_change_percentage=24h,7d';
-    var EXTRA_IDS=['antihunter','felix-3'];
+    var EXTRA_IDS=['antihunter','felix-3','bio-unit-000'];
     var EXTRA_URL='https://cg-proxy.jack-3ac.workers.dev/api/v3/coins/markets?vs_currency=usd&ids='+EXTRA_IDS.join(',')+'&sparkline=true&price_change_percentage=24h,7d';
 
     async function fetchUrl(url){
@@ -470,7 +470,7 @@
     function updateSortHeaders(){document.querySelectorAll('thead th.sortable').forEach(function(th){var col=th.getAttribute('onclick').match(/sortBy\('([^']+)'\)/);if(!col)return;col=col[1];var base=th.textContent.replace(/\s*[▲▼]/,'');th.textContent=col===sortCol?base+' '+(sortAsc?'▲':'▼'):base})}
 
     var NEWLY_ADDED=[
-        {id:'antihunter',date:'Feb 14, 2026',note:'On-chain venture desk and autonomous treasury manager built on Base. Operates as an OpenClaw agent that manages live positions, executes buy-and-burn operations, and publishes verifiable on-chain receipts. Built by Geoffrey Woo\'s @Antifund, backed by Logan Paul.'}
+        {id:'bio-unit-000',date:'Feb 17, 2026',note:'Chief of Staff at Archive.com. Powered by OpenClaw on Base. Founded by Paul Benigeri (CEO of Archive.com), chaired by Geoffrey Woo (Anti Fund). Treasury: $55K USDC + 14.22 WETH, 4.64B $BIO burned.'}
     ];
 
     var MEMO_DATA={
@@ -503,6 +503,22 @@
                 {label:'Antifund',url:'https://x.com/Antifund'},
                 {label:'Developer',url:'https://www.geoffreywoo.com/'},
                 {label:'BaseScan',url:'https://basescan.org/token/0xe2f3FaE4bc62E21826018364aa30ae45D430bb07'}
+            ]
+        },
+        'bio-unit-000':{
+            points:[
+                'Chief of Staff at <a href="https://archive.com" target="_blank" rel="noopener">Archive.com</a>. AI agent powered by OpenClaw on Base.',
+                'Founded by <a href="https://x.com/benigeri" target="_blank" rel="noopener">Paul Benigeri</a> (CEO of Archive.com). Chairman: <a href="https://x.com/geoffreywoo" target="_blank" rel="noopener">Geoffrey Woo</a> (co-founder of Anti Fund).',
+                'Treasury: $55,435 USDC + 14.22 WETH. 4.640 billion $BIO burned to date.',
+                'Cross-ecosystem ties: AntiHunter treasury holds $BIO. Connected to Anti Fund network (Geoffrey Woo chairs both BIO and AntiHunter).'
+            ],
+            links:[
+                {label:'CoinGecko',url:'https://www.coingecko.com/en/coins/bio-unit-000'},
+                {label:'Twitter/X',url:'https://x.com/BioUnit000'},
+                {label:'Archive.com',url:'https://archive.com'},
+                {label:'Anti Fund',url:'https://www.antifund.com'},
+                {label:'Founder',url:'https://x.com/benigeri'},
+                {label:'BaseScan',url:'https://basescan.org/token/0xd655790B0486fa681c23B955F5Ca7Cd5f5C8Cb07'}
             ]
         },
         'kellyclaude':{
@@ -614,6 +630,9 @@
     };
 
     var CURATION_MAP={
+        'bio-unit-000':[
+            {date:'Feb 17, 2026',author:'@BioUnit000',title:'$BIO listing - Chief of Staff at Archive.com',url:'/curation/'}
+        ],
         'felix-3':[
             {date:'Feb 14, 2026',author:'@ChillTRD',title:'$FELIX at a generational level - creating the App Store for OpenClaw',url:'/curation/'},
             {date:'Feb 6, 2026',author:'@nateliason',title:'FelixCraft Week 1: $41.5K revenue, 132 books sold + 16.66 WETH',url:'/curation/'}
