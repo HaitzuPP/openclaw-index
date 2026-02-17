@@ -216,9 +216,13 @@
     </div>
     <div class="stats">
         <div class="stat-box"><span class="stat-box-label">Total FDV</span><span class="stat-box-val" id="stat-mcap">--</span></div>
-        <div class="stat-box" style="flex-direction:column;align-items:stretch;gap:.4rem"><div style="display:flex;align-items:center;gap:1rem"><span class="stat-box-label">FDV Trend 7D</span><span id="fdv-trend" style="font-size:.65rem;font-weight:500"></span></div><canvas id="fdv-spark" width="160" height="32" style="display:none;width:160px;height:32px"></canvas></div>
         <div class="stat-box" id="stat-top-gain"><span class="stat-box-label">Top 24H Mover</span><span class="stat-box-val">--</span></div>
         <div class="stat-box" id="stat-top-loss"><span class="stat-box-label">Biggest 24H Drop</span><span class="stat-box-val">--</span></div>
+    </div>
+    <div class="stats" style="padding-top:0">
+        <div class="stat-box" style="flex-direction:column;align-items:stretch;gap:.4rem"><div style="display:flex;align-items:center;gap:1rem"><span class="stat-box-label">Total FDV Trend 24H</span><span id="fdv-trend-24h" style="font-size:.65rem;font-weight:500">--</span></div></div>
+        <div class="stat-box" style="flex-direction:column;align-items:stretch;gap:.4rem"><div style="display:flex;align-items:center;gap:1rem"><span class="stat-box-label">Total FDV Trend 7D</span><span id="fdv-trend-7d" style="font-size:.65rem;font-weight:500">--</span></div><canvas id="fdv-spark" width="160" height="32" style="display:none;width:160px;height:32px"></canvas></div>
+        <div class="stat-box" style="flex-direction:column;align-items:stretch;gap:.4rem"><div style="display:flex;align-items:center;gap:1rem"><span class="stat-box-label">Total FDV Trend 30D</span><span id="fdv-trend-30d" style="font-size:.65rem;font-weight:500">--</span></div></div>
     </div>
     <div id="newly-added" style="background:color-mix(in srgb,var(--accent) 4%,var(--bg));border:1px solid color-mix(in srgb,var(--accent) 20%,var(--border));border-radius:10px;padding:1.25rem 1.5rem;margin:0 auto 1.5rem;display:none;max-width:1200px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:.75rem">
@@ -322,6 +326,19 @@
             if(c!=null){if(!topG||c>topG.price_change_percentage_24h)topG=t;if(!topL||c<topL.price_change_percentage_24h)topL=t}
         });
         document.getElementById('stat-mcap').textContent=fmtUsd(total);
+        // 24h FDV change: estimate yesterday's total FDV from per-token 24h changes
+        var totalYesterday=0;
+        allTokens.forEach(function(t){
+            var fdv=t.fully_diluted_valuation||0;
+            var pct=t.price_change_percentage_24h;
+            if(fdv&&pct!=null){totalYesterday+=fdv/(1+pct/100)}else{totalYesterday+=fdv}
+        });
+        if(totalYesterday>0){
+            var ch24=((total-totalYesterday)/totalYesterday*100);
+            var el24=document.getElementById('fdv-trend-24h');
+            el24.textContent=(ch24>=0?'+':'')+ch24.toFixed(1)+'%';
+            el24.style.color=ch24>=0?'var(--green)':'var(--red)';
+        }
         logFdvHistory(total);
         if(topG){var gc=topG.price_change_percentage_24h;document.getElementById('stat-top-gain').innerHTML='<span class="stat-box-label">Top 24H Mover</span><a href="https://www.coingecko.com/en/coins/'+topG.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+esc(topG.symbol.toUpperCase())+'</span><span class="stat-box-pct" style="color:var(--green)">'+fmtChange(gc)+'</span></a>'}
         if(topL){var lc=topL.price_change_percentage_24h;document.getElementById('stat-top-loss').innerHTML='<span class="stat-box-label">Biggest 24H Drop</span><a href="https://www.coingecko.com/en/coins/'+topL.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+esc(topL.symbol.toUpperCase())+'</span><span class="stat-box-pct" style="color:var(--red)">'+fmtChange(lc)+'</span></a>'}
@@ -382,12 +399,19 @@
         }
         ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.stroke();
         canvas.style.display='block';
-        // Trend indicator
-        var pct=((vals[vals.length-1]-vals[0])/vals[0]*100);
-        var sign=pct>=0?'+':'';
-        var el=document.getElementById('fdv-trend');
-        el.textContent=sign+pct.toFixed(1)+'%';
-        el.style.color=color;
+        // 7D trend
+        var last=vals[vals.length-1];
+        var d7=vals.length>=7?vals[vals.length-7]:vals[0];
+        var pct7=((last-d7)/d7*100);
+        var el7=document.getElementById('fdv-trend-7d');
+        el7.textContent=(pct7>=0?'+':'')+pct7.toFixed(1)+'%';
+        el7.style.color=pct7>=0?'#00d672':'#ef4444';
+        // 30D trend
+        var d30=vals.length>=30?vals[vals.length-30]:vals[0];
+        var pct30=((last-d30)/d30*100);
+        var el30=document.getElementById('fdv-trend-30d');
+        el30.textContent=(pct30>=0?'+':'')+pct30.toFixed(1)+'%';
+        el30.style.color=pct30>=0?'#00d672':'#ef4444';
     }
 
     function getFiltered(){
