@@ -220,9 +220,9 @@
         <div class="stat-box" id="stat-top-loss"><span class="stat-box-label">Biggest 24H Drop</span><span class="stat-box-val">--</span></div>
     </div>
     <div class="stats" style="padding-top:0">
-        <div class="stat-box" style="flex-direction:column;align-items:stretch;gap:.4rem"><div style="display:flex;align-items:center;gap:1rem"><span class="stat-box-label">Total FDV Trend 24H</span><span id="fdv-trend-24h" style="font-size:.65rem;font-weight:500">--</span></div></div>
-        <div class="stat-box" style="flex-direction:column;align-items:stretch;gap:.4rem"><div style="display:flex;align-items:center;gap:1rem"><span class="stat-box-label">Total FDV Trend 7D</span><span id="fdv-trend-7d" style="font-size:.65rem;font-weight:500">--</span></div><canvas id="fdv-spark" width="160" height="32" style="display:none;width:160px;height:32px"></canvas></div>
-        <div class="stat-box" style="flex-direction:column;align-items:stretch;gap:.4rem"><div style="display:flex;align-items:center;gap:1rem"><span class="stat-box-label">Total FDV Trend 30D</span><span id="fdv-trend-30d" style="font-size:.65rem;font-weight:500">--</span></div></div>
+        <div class="stat-box" style="flex-direction:column;align-items:stretch;gap:.4rem"><div style="display:flex;align-items:center;gap:1rem"><span class="stat-box-label">Total FDV Trend 24H</span><span id="fdv-trend-24h" style="font-size:.65rem;font-weight:500">--</span></div><canvas id="fdv-spark-24h" width="160" height="32" style="display:none;width:160px;height:32px"></canvas></div>
+        <div class="stat-box" style="flex-direction:column;align-items:stretch;gap:.4rem"><div style="display:flex;align-items:center;gap:1rem"><span class="stat-box-label">Total FDV Trend 7D</span><span id="fdv-trend-7d" style="font-size:.65rem;font-weight:500">--</span></div><canvas id="fdv-spark-7d" width="160" height="32" style="display:none;width:160px;height:32px"></canvas></div>
+        <div class="stat-box" style="flex-direction:column;align-items:stretch;gap:.4rem"><div style="display:flex;align-items:center;gap:1rem"><span class="stat-box-label">Total FDV Trend 30D</span><span id="fdv-trend-30d" style="font-size:.65rem;font-weight:500">--</span></div><canvas id="fdv-spark-30d" width="160" height="32" style="display:none;width:160px;height:32px"></canvas></div>
     </div>
     <div id="newly-added" style="background:color-mix(in srgb,var(--accent) 4%,var(--bg));border:1px solid color-mix(in srgb,var(--accent) 20%,var(--border));border-radius:10px;padding:1.25rem 1.5rem;margin:0 auto 1.5rem;display:none;max-width:1200px">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;flex-wrap:wrap;gap:.75rem">
@@ -368,18 +368,17 @@
         localStorage.setItem(key,JSON.stringify(hist));
         drawFdvSparkline(hist);
     }
-    function drawFdvSparkline(hist){
-        if(hist.length<2)return;
-        var canvas=document.getElementById('fdv-spark');
+    function drawMiniSparkline(canvasId,vals){
+        if(!vals||vals.length<2)return;
+        var canvas=document.getElementById(canvasId);
+        if(!canvas)return;
         var ctx=canvas.getContext('2d');
         var w=canvas.width,h=canvas.height;
-        var vals=hist.map(function(p){return p.v});
         var mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals);
         if(mx===mn)mx=mn+1;
         var up=vals[vals.length-1]>=vals[0];
         var color=up?'#00d672':'#ef4444';
         ctx.clearRect(0,0,w,h);
-        // Fill gradient
         ctx.beginPath();
         for(var i=0;i<vals.length;i++){
             var x=i/(vals.length-1)*w;
@@ -390,7 +389,6 @@
         var grad=ctx.createLinearGradient(0,0,0,h);
         grad.addColorStop(0,color+'33');grad.addColorStop(1,color+'05');
         ctx.fillStyle=grad;ctx.fill();
-        // Line
         ctx.beginPath();
         for(var i=0;i<vals.length;i++){
             var x=i/(vals.length-1)*w;
@@ -399,19 +397,49 @@
         }
         ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.stroke();
         canvas.style.display='block';
-        // 7D trend
+    }
+    function build24hSparkline(){
+        // Build hourly FDV totals from last 24h of each token's sparkline_in_7d
+        var points=[];
+        for(var hr=0;hr<24;hr++)points[hr]=0;
+        allTokens.forEach(function(t){
+            var spark=(t.sparkline_in_7d||{}).price||[];
+            var price=t.current_price||0;
+            if(!spark.length||!price)return;
+            var fdv=t.fully_diluted_valuation||0;
+            if(fdv<250000)return;
+            var supply=fdv/price;
+            var last24=spark.slice(-24);
+            for(var hr=0;hr<last24.length;hr++){
+                points[hr]+=last24[hr]*supply;
+            }
+        });
+        if(points[0]>0){
+            drawMiniSparkline('fdv-spark-24h',points);
+        }
+    }
+    function drawFdvSparkline(hist){
+        if(hist.length<2)return;
+        var vals=hist.map(function(p){return p.v});
+        // 7D sparkline
+        var vals7=vals.slice(-7);
+        drawMiniSparkline('fdv-spark-7d',vals7);
         var last=vals[vals.length-1];
-        var d7=vals.length>=7?vals[vals.length-7]:vals[0];
+        var d7=vals7[0];
         var pct7=((last-d7)/d7*100);
         var el7=document.getElementById('fdv-trend-7d');
         el7.textContent=(pct7>=0?'+':'')+pct7.toFixed(1)+'%';
         el7.style.color=pct7>=0?'#00d672':'#ef4444';
-        // 30D trend
-        var d30=vals.length>=30?vals[vals.length-30]:vals[0];
+        // 30D sparkline
+        var vals30=vals.slice(-30);
+        drawMiniSparkline('fdv-spark-30d',vals30);
+        var d30=vals30[0];
         var pct30=((last-d30)/d30*100);
         var el30=document.getElementById('fdv-trend-30d');
         el30.textContent=(pct30>=0?'+':'')+pct30.toFixed(1)+'%';
         el30.style.color=pct30>=0?'#00d672':'#ef4444';
+        // 24H sparkline from CoinGecko hourly data
+        build24hSparkline();
     }
 
     function getFiltered(){
