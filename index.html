@@ -44,12 +44,12 @@
       ]
     }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Geist+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root{--bg:#0b0a0b;--bg-card:#111;--border:#1a1a1a;--border-hover:#333;--text:#fff;--text-sec:#888;--text-muted:#555;--accent:#ff6b35;--accent-start:#ff4444;--accent-end:#ff8c00;--accent-dim:color-mix(in srgb,#ff6b35 15%,var(--bg));--green:#22c55e;--red:#ef4444;--red-dim:color-mix(in srgb,#ef4444 15%,var(--bg))}
         [data-theme="light"]{--bg:#fafafa;--bg-card:#fff;--border:#e0e0e0;--border-hover:#ccc;--text:#111;--text-sec:#555;--text-muted:#999;--accent:#e55a2b;--accent-start:#dd3333;--accent-end:#e07000;--accent-dim:color-mix(in srgb,#e55a2b 12%,#fff);--green:#16a34a;--red:#dc2626;--red-dim:color-mix(in srgb,#dc2626 12%,#fff)}
         *{margin:0;padding:0;box-sizing:border-box}
-        body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;transition:background .3s,color .3s}
+        body{background:var(--bg);color:var(--text);font-family:'Geist Mono','Inter',-apple-system,BlinkMacSystemFont,sans-serif;line-height:1.6;transition:background .3s,color .3s}
         h1,h2,h3,.stat-number{font-family:'Fragment Mono',monospace}
         .accent{background:linear-gradient(135deg,var(--accent-start),var(--accent-end));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
         .underline-accent{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:6px;text-decoration-thickness:2px}
@@ -65,7 +65,7 @@
         .nav-brand{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--text);font-family:'Fragment Mono',monospace;font-size:13px;font-weight:400;letter-spacing:2px;text-transform:uppercase}
         .nav-brand svg{width:24px;height:24px}
         .nav-links{display:flex;align-items:center;gap:1.5rem}
-        .nav-link{color:var(--text-sec);text-decoration:none;font-family:'Inter',sans-serif;font-size:12px;font-weight:400;letter-spacing:1px;text-transform:uppercase;padding:4px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+        .nav-link{color:var(--text-sec);text-decoration:none;font-family:'Geist Mono','Inter',sans-serif;font-size:12px;font-weight:400;letter-spacing:1px;text-transform:uppercase;padding:4px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
         .nav-link:hover{color:var(--text)}.nav-link.active{color:var(--text);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:4px}
         .submit-btn{border:1px solid var(--text-sec);background:transparent;color:var(--text);padding:.35rem .85rem;border-radius:6px;text-decoration:none;font-weight:500;font-size:.8rem;cursor:pointer;transition:all .2s}
         .submit-btn:hover{background:var(--text);color:var(--bg)}
@@ -76,7 +76,7 @@
         .hero{max-width:1200px;margin:0 auto;padding:4rem 1.5rem 2rem}
         .hero-label{font-family:'Fragment Mono',monospace;font-size:clamp(11px,1.2vw,13px);color:var(--text-muted);text-transform:uppercase;letter-spacing:3px;margin-bottom:1.25rem}
         .hero h1{font-family:'Fragment Mono',monospace;font-size:clamp(24px,3.5vw,40px);font-weight:400;line-height:1.2;margin-bottom:1.25rem}
-        .hero-sub{font-family:'Inter',sans-serif;font-size:clamp(14px,1.5vw,16px);color:var(--text-sec);max-width:640px;line-height:1.7;letter-spacing:.2px}
+        .hero-sub{font-family:'Geist Mono','Inter',sans-serif;font-size:clamp(14px,1.5vw,16px);color:var(--text-sec);max-width:640px;line-height:1.7;letter-spacing:.2px}
         .stats{max-width:1200px;margin:0 auto;padding:1rem 1.5rem 2rem;display:flex;gap:1rem;flex-wrap:wrap}
         .stat-box{display:flex;align-items:center;gap:1rem;border:1px solid var(--border);border-radius:8px;padding:.6rem 1.25rem;font-family:'Fragment Mono',monospace;font-size:.85rem}
         .stat-box-label{color:var(--text-muted);font-size:.65rem;text-transform:uppercase;letter-spacing:1px;white-space:nowrap}
@@ -194,13 +194,6 @@
             <p style="color:#555;margin-top:2rem;font-size:.8rem">Tracked by <a href="https://x.com/khalaResearch" style="color:#ff6b35">Khala Research</a></p>
         </div>
     </noscript>
-    <div class="sammy-banner">
-        <span class="sammy-dot"></span>
-        <a href="https://x.com/khalaResearch" target="_blank" rel="noopener">
-            Built by <span class="sammy-name">Khala Research</span>
-            <svg class="sammy-x" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
-    </div>
     <header>
         <nav>
             <a href="/" class="nav-brand">
@@ -219,15 +212,14 @@
         <div class="hero-label">Tracked by <a href="https://x.com/khalaResearch" target="_blank" rel="noopener" style="color:var(--text-sec);text-decoration:underline;text-underline-offset:2px">Khala Research</a></div>
         <h1>Tokens powered by <span class="underline-accent">OpenClaw</span></h1>
         <p class="hero-sub">Live market data for public tokens in the OpenClaw ecosystem.</p>
-        <p class="hero-sub" style="margin-top:.75rem">DM <span style="color:var(--accent)">@haitzu</span> on TG for listing inclusion.</p>
     </div>
     <div class="stats">
         <div class="stat-box" style="flex-direction:column;align-items:stretch;gap:.4rem"><div style="display:flex;align-items:center;gap:1rem"><span class="stat-box-label">Total FDV</span><span class="stat-box-val" id="stat-mcap">--</span><span id="fdv-trend" style="font-size:.65rem;font-weight:500"></span></div><canvas id="fdv-spark" width="160" height="32" style="display:none;width:160px;height:32px"></canvas></div>
         <div class="stat-box" id="stat-top-gain"><span class="stat-box-label">Top 24H Mover</span><span class="stat-box-val">--</span></div>
         <div class="stat-box" id="stat-top-loss"><span class="stat-box-label">Biggest 24H Drop</span><span class="stat-box-val">--</span></div>
     </div>
-    <div id="newly-added" style="background:color-mix(in srgb,var(--accent) 5%,var(--bg));border:1px solid color-mix(in srgb,var(--accent) 15%,var(--border));border-radius:10px;padding:1rem 1.25rem;margin:0 auto 1.5rem;display:none;max-width:1200px;padding-left:1.5rem;padding-right:1.5rem">
-        <div style="font-size:.7rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem">New Listings</div>
+    <div id="newly-added" style="border:1px solid var(--border);border-radius:8px;padding:.8rem 1.25rem;margin:0 auto 1.5rem;display:none;max-width:1200px;padding-left:1.5rem;padding-right:1.5rem">
+        <div style="font-family:'Fragment Mono',monospace;font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem">New Listings</div>
         <div id="newly-added-list" style="display:flex;flex-direction:column;gap:.35rem;font-size:.85rem;color:var(--text-sec)"></div>
     </div>
     <div class="controls">
@@ -262,7 +254,7 @@
         <div style="font-size:.7rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.5rem">Newsletter</div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem">
             <div><div style="font-size:.85rem;color:var(--text);line-height:1.4">Never miss an update on the OpenClaw ecosystem.</div><div style="font-size:.8rem;color:var(--text-sec);margin-top:.25rem">Subscribe to <a href="https://s4mmyeth.substack.com/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:underline;text-underline-offset:2px">0xSammy's newsletter</a></div></div>
-            <a href="https://s4mmyeth.substack.com/" target="_blank" rel="noopener" style="display:inline-block;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:.5rem 1.25rem;font-size:.8rem;font-weight:600;font-family:Inter,sans-serif;text-decoration:none;white-space:nowrap">Subscribe</a>
+            <a href="https://s4mmyeth.substack.com/" target="_blank" rel="noopener" style="display:inline-block;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:.5rem 1.25rem;font-size:.8rem;font-weight:600;font-family:'Geist Mono','Inter',sans-serif;text-decoration:none;white-space:nowrap">Subscribe</a>
         </div>
     </div>
     <footer>
