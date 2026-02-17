@@ -344,7 +344,7 @@
         if(topL){var lc=topL.price_change_percentage_24h;document.getElementById('stat-top-loss').innerHTML='<span class="stat-box-label">Biggest 24H Drop</span><a href="https://www.coingecko.com/en/coins/'+topL.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+esc(topL.symbol.toUpperCase())+'</span><span class="stat-box-pct" style="color:var(--red)">'+fmtChange(lc)+'</span></a>'}
     }
 
-    var FDV_SEED=[{"d":"2026-02-10","v":39233651},{"d":"2026-02-11","v":40483663},{"d":"2026-02-12","v":41537662},{"d":"2026-02-13","v":41302524},{"d":"2026-02-14","v":36934738},{"d":"2026-02-15","v":31409354},{"d":"2026-02-16","v":33213065}];
+    var FDV_SEED=[{"d":"2026-01-18","v":305708},{"d":"2026-01-19","v":296296},{"d":"2026-01-20","v":279360},{"d":"2026-01-21","v":204730},{"d":"2026-01-22","v":227566},{"d":"2026-01-23","v":221596},{"d":"2026-01-24","v":220666},{"d":"2026-01-25","v":207369},{"d":"2026-01-26","v":240642},{"d":"2026-01-27","v":20627397},{"d":"2026-01-28","v":23804399},{"d":"2026-01-29","v":18970617},{"d":"2026-01-30","v":8895104},{"d":"2026-01-31","v":72335104},{"d":"2026-02-01","v":65812333},{"d":"2026-02-02","v":71665294},{"d":"2026-02-03","v":46873646},{"d":"2026-02-04","v":36847075},{"d":"2026-02-05","v":28259185},{"d":"2026-02-06","v":32606877},{"d":"2026-02-07","v":32871701},{"d":"2026-02-08","v":39644727},{"d":"2026-02-09","v":44509559},{"d":"2026-02-10","v":44280732},{"d":"2026-02-11","v":46684087},{"d":"2026-02-12","v":50219035},{"d":"2026-02-13","v":47887032},{"d":"2026-02-14","v":43855570},{"d":"2026-02-15","v":39187265},{"d":"2026-02-16","v":34338947}];
     function logFdvHistory(total){
         if(!total||total<1)return;
         var key='clawprice-fdv-history';
@@ -353,7 +353,7 @@
         var hist=[];
         try{hist=JSON.parse(localStorage.getItem(key))||[]}catch(e){}
         // Seed with historical data if empty or missing old dates
-        if(!hist.length||hist[0].d>'2026-02-10'){
+        if(!hist.length||hist[0].d>'2026-01-18'){
             var merged={};
             FDV_SEED.forEach(function(p){merged[p.d]=p.v});
             hist.forEach(function(p){merged[p.d]=p.v});
