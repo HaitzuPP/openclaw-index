@@ -330,6 +330,7 @@
         if(topL){var lc=topL.price_change_percentage_24h;document.getElementById('stat-top-loss').innerHTML='<span class="stat-box-label">Biggest 24H Drop</span><a href="https://www.coingecko.com/en/coins/'+topL.id+'" target="_blank" rel="noopener"><span class="stat-box-val">'+esc(topL.symbol.toUpperCase())+'</span><span class="stat-box-pct" style="color:var(--red)">'+fmtChange(lc)+'</span></a>'}
     }
 
+    var FDV_SEED=[{"d":"2026-02-10","v":39233651},{"d":"2026-02-11","v":40483663},{"d":"2026-02-12","v":41537662},{"d":"2026-02-13","v":41302524},{"d":"2026-02-14","v":36934738},{"d":"2026-02-15","v":31409354},{"d":"2026-02-16","v":33213065}];
     function logFdvHistory(total){
         if(!total||total<1)return;
         var key='clawprice-fdv-history';
@@ -337,6 +338,13 @@
         var day=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
         var hist=[];
         try{hist=JSON.parse(localStorage.getItem(key))||[]}catch(e){}
+        // Seed with historical data if empty or missing old dates
+        if(!hist.length||hist[0].d>'2026-02-10'){
+            var merged={};
+            FDV_SEED.forEach(function(p){merged[p.d]=p.v});
+            hist.forEach(function(p){merged[p.d]=p.v});
+            hist=Object.keys(merged).sort().map(function(d){return{d:d,v:merged[d]}});
+        }
         // One snapshot per day (update if same day)
         var last=hist.length?hist[hist.length-1]:null;
         if(last&&last.d===day){last.v=total}
